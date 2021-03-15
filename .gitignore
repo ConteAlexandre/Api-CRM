@@ -22,21 +22,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/linux,jetbrains+all,symfony,windows,macos,archlinuxpackages
 # Edit at https://www.toptal.com/developers/gitignore?templates=linux,jetbrains+all,symfony,windows,macos,archlinuxpackages
 
-### ArchLinuxPackages ###
-*.tar
-*.tar.*
-*.jar
-*.exe
-*.msi
-*.zip
-*.tgz
-*.log
-*.log.*
-*.sig
-
-pkg/
-src/
-
 ### JetBrains+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
