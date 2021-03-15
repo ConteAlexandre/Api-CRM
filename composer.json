@@ -15,14 +15,17 @@
         "doctrine/orm": "^2.8",
         "lexik/jwt-authentication-bundle": "^2.11",
         "nelmio/cors-bundle": "^2.1",
+        "odolbeau/phone-number-bundle": "^3.3",
         "sonata-project/admin-bundle": "^3.92",
         "sonata-project/doctrine-orm-admin-bundle": "^3.31",
+        "stof/doctrine-extensions-bundle": "^1.6",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "4.4.*",
         "symfony/proxy-manager-bridge": "4.4.*",
         "symfony/validator": "4.4.*",
+        "symfony/workflow": "4.4.*",
         "symfony/yaml": "4.4.*"
     },
     "config": {

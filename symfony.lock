@@ -2,6 +2,9 @@
     "behat/gherkin": {
         "version": "v4.8.0"
     },
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {
@@ -147,6 +150,15 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.0.3"
+    },
+    "giggsey/libphonenumber-for-php": {
+        "version": "8.12.19"
+    },
+    "giggsey/locale": {
+        "version": "1.9"
+    },
     "guzzlehttp/psr7": {
         "version": "1.7.0"
     },
@@ -212,6 +224,18 @@
     },
     "nikic/php-parser": {
         "version": "v4.10.4"
+    },
+    "odolbeau/phone-number-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "4388686329b81291918a948cd42891829fb1de71"
+        },
+        "files": [
+            "config/packages/misd_phone_number.yaml"
+        ]
     },
     "phar-io/manifest": {
         "version": "2.0.1"
@@ -372,6 +396,18 @@
     },
     "sonata-project/twig-extensions": {
         "version": "1.5.1"
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
+        ]
     },
     "symfony/asset": {
         "version": "v4.4.20"
@@ -640,6 +676,18 @@
     },
     "symfony/var-exporter": {
         "version": "v4.4.20"
+    },
+    "symfony/workflow": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "3b2f8ca32a07fcb00f899649053943fa3d8bbfb6"
+        },
+        "files": [
+            "config/packages/workflow.yaml"
+        ]
     },
     "symfony/yaml": {
         "version": "v4.4.20"
