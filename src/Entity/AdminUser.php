@@ -8,6 +8,7 @@ use App\Repository\AdminUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -46,6 +47,14 @@ class AdminUser implements UserInterface
 
     /**
      * @var string
+     *
+     * @PasswordRequirements(
+     *     minLength=8,
+     *     requireLetters=true,
+     *     requireNumbers=true,
+     *     requireCaseDiff=true,
+     *     requireSpecialCharacter=truem
+     * )
      */
     private $plainPassword;
 
@@ -133,6 +142,22 @@ class AdminUser implements UserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 
     /**

@@ -302,6 +302,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "rollerworks/password-strength-validator": {
+        "version": "v1.3.2"
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
