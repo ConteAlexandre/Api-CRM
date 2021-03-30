@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\EnabledEntityTrait;
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -53,6 +55,19 @@ class Client
      * @ORM\ManyToOne(targetEntity=ClientActivity::class, inversedBy="clients")
      */
     private $clientActivity;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="client")
+     */
+    private $actions;
+
+    /**
+     * Client constructor.
+     */
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -178,6 +193,46 @@ class Client
     public function setClientActivity(?ClientActivity $clientActivity): self
     {
         $this->clientActivity = $clientActivity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Action[]
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function addAction(Action $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setClient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function removeAction(Action $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getClient() === $this) {
+                $action->setClient(null);
+            }
+        }
 
         return $this;
     }

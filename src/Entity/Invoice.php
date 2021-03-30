@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\EnabledEntityTrait;
 use App\Repository\InvoiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -38,6 +40,19 @@ class Invoice
      * @ORM\Column(type="integer")
      */
     private $price;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="invoice")
+     */
+    private $actions;
+
+    /**
+     * Invoice constructor.
+     */
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -103,6 +118,46 @@ class Invoice
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Action[]
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function addAction(Action $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setInvoice($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function removeAction(Action $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getInvoice() === $this) {
+                $action->setInvoice(null);
+            }
+        }
 
         return $this;
     }

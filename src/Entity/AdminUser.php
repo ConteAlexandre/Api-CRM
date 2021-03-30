@@ -53,7 +53,7 @@ class AdminUser implements UserInterface
      *     requireLetters=true,
      *     requireNumbers=true,
      *     requireCaseDiff=true,
-     *     requireSpecialCharacter=truem
+     *     requireSpecialCharacter=true,
      * )
      */
     private $plainPassword;

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Entity\Traits\EnabledEntityTrait;
 use App\Entity\Traits\RolableEntityTrait;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -62,8 +64,8 @@ class User implements UserInterface
      *     minLength=8,
      *     requireLetters=true,
      *     requireNumbers=true,
-     *     requireCaseDiff=true
-     *     requireSpecialCharac
+     *     requireCaseDiff=true,
+     *     requireSpecialCharacter=true,
      * )
      */
     private $plainPassword;
@@ -82,6 +84,19 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isArchived;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="user")
+     */
+    private $actions;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
 
     /**
      * Return the default role
@@ -281,5 +296,45 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return Collection|Action[]
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function addAction(Action $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function removeAction(Action $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getUser() === $this) {
+                $action->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
