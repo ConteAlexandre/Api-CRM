@@ -14,6 +14,8 @@ class UserFixtures extends AbstractFixtures
 
     /**
      * @param ObjectManager $manager
+     *
+     * @throws \Exception
      */
     public function load(ObjectManager $manager)
     {
