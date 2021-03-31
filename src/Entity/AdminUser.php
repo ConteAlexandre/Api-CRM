@@ -147,10 +147,14 @@ class AdminUser implements UserInterface
 
     /**
      * @param string $plainPassword
+     *
+     * @return AdminUser
      */
-    public function setPlainPassword(string $plainPassword): void
+    public function setPlainPassword(string $plainPassword): AdminUser
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 
     /**
@@ -159,7 +163,7 @@ class AdminUser implements UserInterface
     public function getRoles(): ?array
     {
         if (empty($this->roles)){
-            return ['ROLE_USER'];
+            return ['ROLE_ADMIN'];
         }
         return $this->roles;
     }
@@ -217,6 +221,6 @@ class AdminUser implements UserInterface
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
 }
