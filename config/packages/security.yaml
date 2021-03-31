@@ -1,16 +1,45 @@
 security:
+    role_hierarchy:
+        ROLE_ADMIN: [ ROLE_USER, ROLE_SONATA_ADMIN ]
+
     encoders:
         App\Entity\AdminUser: auto
         App\Entity\User: auto
+
     providers:
-        users_in_memory: { memory: null }
+        users:
+            entity:
+                class: 'App\Entity\User'
+                property: 'email'
+        admin:
+            entity:
+                class: 'App\Entity\AdminUser'
+                property: 'email'
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin:
+            pattern:            /admin(.*)
+            provider:           admin
+            form_login:
+                login_path:     admin_login
+                use_forward:    false
+                check_path:     admin_login
+                failure_path:   null
+            logout:
+                path:           admin_logout
+                target:         admin_login
+            anonymous:          true
+            guard:
+                authenticators:
+                    - App\Security\AdminLoginAuthenticator
+
         main:
             anonymous: lazy
-            provider: users_in_memory
+            provider: users
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -21,5 +50,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/admin, roles: ROLE_ADMIN }
