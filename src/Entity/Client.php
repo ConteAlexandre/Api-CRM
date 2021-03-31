@@ -37,6 +37,11 @@ class Client
     private $lastName;
 
     /**
+     * @ORM\Column(type="string", length=150, name="email")
+     */
+    private $email;
+
+    /**
      * @ORM\Column(type="date")
      */
     private $birthday;
@@ -115,6 +120,22 @@ class Client
         $this->lastName = $lastName;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
     }
 
     /**
