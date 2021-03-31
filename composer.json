@@ -15,6 +15,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "fzaninotto/faker": "^1.5",
+        "jms/serializer-bundle": "^3.9",
         "lexik/jwt-authentication-bundle": "^2.11",
         "nelmio/cors-bundle": "^2.1",
         "odolbeau/phone-number-bundle": "^3.3",
