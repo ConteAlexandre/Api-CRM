@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Traits\EnabledEntityTrait;
-use App\Entity\Traits\RolableEntityTrait;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,10 +19,7 @@ class User implements UserInterface
 {
     use TimestampableEntity,
         BlameableEntity,
-        EnabledEntityTrait,
-        RolableEntityTrait;
-
-    const DEFAULT_ROLE = 'ROLE_USER';
+        EnabledEntityTrait;
 
     /**
      * @ORM\Id
@@ -81,6 +77,11 @@ class User implements UserInterface
     private $resetToken;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = [];
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isArchived;
@@ -96,14 +97,6 @@ class User implements UserInterface
     public function __construct()
     {
         $this->actions = new ArrayCollection();
-    }
-
-    /**
-     * Return the default role
-     */
-    public static function getDefaultRole()
-    {
-        return self::DEFAULT_ROLE;
     }
 
     /**
@@ -228,6 +221,25 @@ class User implements UserInterface
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return array|string[]|null
+     */
+    public function getRoles(): ?array
+    {
+        if (empty($this->roles)){
+            return ['ROLE_USER'];
+        }
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     /**

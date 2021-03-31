@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Traits\EnabledEntityTrait;
-use App\Entity\Traits\RolableEntityTrait;
 use App\Repository\AdminUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
@@ -18,10 +17,7 @@ class AdminUser implements UserInterface
 {
     use TimestampableEntity,
         BlameableEntity,
-        EnabledEntityTrait,
-        RolableEntityTrait;
-
-    const DEFAULT_ROLE = 'ROLE_ADMIN';
+        EnabledEntityTrait;
 
     /**
      * @ORM\Id
@@ -59,6 +55,11 @@ class AdminUser implements UserInterface
     private $plainPassword;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $roles = [];
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $salt;
@@ -67,14 +68,6 @@ class AdminUser implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resetToken;
-
-    /**
-     * Return the default role
-     */
-    public static function getDefaultRole()
-    {
-        return self::DEFAULT_ROLE;
-    }
 
     /**
      * @return int|null
@@ -158,6 +151,25 @@ class AdminUser implements UserInterface
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return array|string[]|null
+     */
+    public function getRoles(): ?array
+    {
+        if (empty($this->roles)){
+            return ['ROLE_USER'];
+        }
+        return $this->roles;
+    }
+
+    /**
+     * @param array $roles
+     */
+    public function setRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     /**
