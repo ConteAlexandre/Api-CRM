@@ -11,7 +11,6 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -28,11 +27,6 @@ abstract class AbstractFixtures extends Fixture
     protected $faker;
 
     /**
-     * @var ObjectManager
-     */
-    protected $manager;
-
-    /**
      * @var PropertyAccessor
      */
     protected $propertyAccessor;
@@ -42,6 +36,11 @@ abstract class AbstractFixtures extends Fixture
      */
     protected $passwordEncoder;
 
+    /**
+     * AbstractFixtures constructor.
+     *
+     * @param UserPasswordEncoderInterface $encoder
+     */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->faker = Factory::create();

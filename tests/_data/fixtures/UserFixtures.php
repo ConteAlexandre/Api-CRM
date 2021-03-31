@@ -1,9 +1,10 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\Tests\_data\fixtures;
 
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder;
 
 /**
  * Class UserFixtures
@@ -14,6 +15,8 @@ class UserFixtures extends AbstractFixtures
 
     /**
      * @param ObjectManager $manager
+     *
+     * @throws \Exception
      */
     public function load(ObjectManager $manager)
     {
@@ -31,14 +34,14 @@ class UserFixtures extends AbstractFixtures
     public function loadMichel(ObjectManager $manager)
     {
         $michel = new User();
-        $passwordMichel = $this->passwordEncoder->encodePassword($michel, 'Michelle1!');
+        $encoder = new PlaintextPasswordEncoder();
 
         $dataMichel = [
             'username' => 'Michel',
             'first_name' => 'Michel',
             'last_name' => 'Petit',
             'email' => 'michel@example.com',
-            'password' => $passwordMichel,
+            'password' => $encoder->encodePassword('Michelle1!', ''),
             'salt' => md5(random_bytes(32)),
             'is_archived' => false,
             'roles' => ['ROLE_USER'],
@@ -61,14 +64,14 @@ class UserFixtures extends AbstractFixtures
     {
         for ($i = 0; $i < self::NUMBER_USER; $i++) {
             $user = new User();
-            $password = $this->passwordEncoder->encodePassword($user, 'Michelle2!');
+            $encoder = new PlaintextPasswordEncoder();
 
             $data = [
                 'username' => $this->faker->userName,
                 'first_name' => $this->faker->firstName,
                 'last_name' => $this->faker->lastName,
                 'email' => $this->faker->email,
-                'password' => $password,
+                'password' => $encoder->encodePassword('Michelle2!', ''),
                 'salt' => md5(random_bytes(32)),
                 'is_archived' => false,
                 'roles' => ['ROLE_USER'],
