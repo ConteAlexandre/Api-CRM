@@ -44,3 +44,13 @@ Run the application with this command
 ```
 php -S localhost:8000 -t public
 ```
+
+### Create user admin
+For create an user admin, use the command who follow:
+```
+./bin/console create:admin:user
+or
+php bin/console create:admin:user
+```
+
+Follow instruction

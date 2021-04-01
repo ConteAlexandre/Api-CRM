@@ -9,3 +9,9 @@ services:
     arguments: [~, App\Entity\ClientActivity, ~]
     tags:
       - { name: sonata.admin, manager_type: orm, label: ClientActivity, group: Parameters }
+
+  Users:
+    class: App\Admin\UserAdmin
+    arguments: [ ~, App\Entity\User, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: User, group: Users }
