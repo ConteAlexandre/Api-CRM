@@ -12,6 +12,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -26,26 +27,31 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Serializer\Groups({"user"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"user"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Serializer\Groups({"user"})
      */
     private $email;
 
