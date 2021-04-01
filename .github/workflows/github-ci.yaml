@@ -26,6 +26,15 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
+            
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact-test
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -46,10 +55,6 @@ jobs:
       - name: Run unit test
         run: |
           php vendor/bin/codecept run unit
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifact-test
 
   functional-tests:
     runs-on: ubuntu-latest
