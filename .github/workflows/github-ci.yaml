@@ -1,10 +1,13 @@
-name: SymBNB
+name: Api CRM
 
 on:
   push:
     branches-ignore:
-      - master
+      - main
   pull_request:
+    branches:
+      - develop
+      - main
 
 jobs:
   build:
@@ -30,7 +33,7 @@ jobs:
           composer install --prefer-dist --no-progress --no-suggest
       - name: Run test unit
         run: |
-          ./bin/console vendor/bin/codecept run unit
+          php vendor/bin/codecept run unit
       - name: Run test functional
         run: |
-          ./bin/console vendor/bin/codecept run functional
+          php vendor/bin/codecept run functional
