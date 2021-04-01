@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  check-dependencies:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,44 +31,9 @@ jobs:
         run: |
           composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: artifact-test
-          path: artifact-test.txt
-
-  unit-tests:
-    runs-on: ubuntu-latest
-    needs: check-dependencies
-    steps:
-      - name: use cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-suggest
-
       - name: Run unit test
         run: |
           php vendor/bin/codecept run unit
-
-  functional-tests:
-    runs-on: ubuntu-latest
-    needs: check-dependencies
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: artifact-test
-
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run functional test
         run: |
