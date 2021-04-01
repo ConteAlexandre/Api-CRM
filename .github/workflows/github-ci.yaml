@@ -46,19 +46,20 @@ jobs:
       - name: Run unit test
         run: |
           php vendor/bin/codecept run unit
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: artifact-test
 
   functional-tests:
     runs-on: ubuntu-latest
     needs: check-dependencies
     steps:
-      - name: use cache
-        uses: actions/cache@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v2
         with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-            
+          name: artifact-test
+
       - name: Install dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest
