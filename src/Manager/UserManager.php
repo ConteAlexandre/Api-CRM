@@ -32,7 +32,7 @@ class UserManager
      * @param AdminUserRepository          $userUserRepository
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function __construct(EntityManagerInterface $entityManager, AdminUserRepository $userUserRepository, UserPasswordEncoderInterface $encoder)
+    public function __construct(EntityManagerInterface $entityManager, UserRepository $userUserRepository, UserPasswordEncoderInterface $encoder)
     {
         $this->em = $entityManager;
         $this->userRepository = $userUserRepository;
@@ -46,6 +46,12 @@ class UserManager
     {
         $user = new User();
 
+        return $user;
+    }
+
+    public function getUserBySlug($slug)
+    {
+        $user = $this->userRepository->findOneBySlug($slug);
         return $user;
     }
 
