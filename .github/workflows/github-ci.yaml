@@ -1,4 +1,4 @@
-name: Api CRM
+name: Tests
 
 on:
   push:
@@ -10,10 +10,8 @@ on:
       - main
 
 jobs:
-  build:
+  check-dependencies:
     runs-on: ubuntu-latest
-    outputs:
-      output1: ${{ steps.install-dependencies.outputs }}
     steps:
       - uses: actions/checkout@v2
 
@@ -28,16 +26,38 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-      - id: install-dependencies
+      - name: Install dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest
-  tests:
+
+  unit-tests:
     runs-on: ubuntu-latest
-    needs: build
+    needs: check-dependencies
     steps:
-        - name: Run test unit
-          run: |
-            php vendor/bin/codecept run unit
-        - name: Run test functional
-          run: |
-            php vendor/bin/codecept run functional
+      - name: use cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Run unit test
+        run: |
+          php vendor/bin/codecept run unit
+
+  functional-tests:
+    runs-on: ubuntu-latest
+    needs: check-dependencies
+    steps:
+      - name: use cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Run functional test
+        run: |
+          php vendor/bin/codecept run functional
