@@ -26,7 +26,7 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-            
+
       - name: Install dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest
@@ -35,6 +35,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: artifact-test
+          path: artifact-test.txt
 
   unit-tests:
     runs-on: ubuntu-latest
