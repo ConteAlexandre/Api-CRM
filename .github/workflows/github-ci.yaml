@@ -11,9 +11,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    outputs:
+      output1: ${{ steps.install-dependencies }}
     steps:
       - uses: actions/checkout@v2
 
@@ -28,7 +28,7 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-      - name: Install dependencies
+      - id: install-dependencies
         run: |
           composer install --prefer-dist --no-progress --no-suggest
   tests:
