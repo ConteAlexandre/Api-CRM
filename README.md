@@ -54,3 +54,11 @@ php bin/console create:admin:user
 ```
 
 Follow instruction
+
+### Launch Test
+For launch test in local, execute this command:
+```
+php bin/console vendor/bin/codecept run
+or
+./bin/console vendor/bin/codecept run
+```

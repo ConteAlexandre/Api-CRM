@@ -3,7 +3,7 @@
 namespace App\Form\Account;
 
 use App\Entity\Client;
-use libphonenumber\PhoneNumberType;
+use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -22,7 +22,9 @@ class RegisterClientFormType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('email', EmailType::class)
-            ->add('numberPhone', PhoneNumberType::class)
+            ->add('numberPhone', PhoneNumberType::class, [
+                'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+            ])
             ->add('birthday', DateType::class)
         ;
     }
