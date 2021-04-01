@@ -9,8 +9,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -25,26 +27,31 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Serializer\Groups({"user"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"user"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=150)
+     * @Serializer\Groups({"user"})
      */
     private $email;
 
@@ -65,6 +72,14 @@ class User implements UserInterface
      * )
      */
     private $plainPassword;
+
+
+    /**
+     * @Gedmo\Slug(fields={"lastName", "firstName"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -173,6 +188,14 @@ class User implements UserInterface
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
