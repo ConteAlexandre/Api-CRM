@@ -4,6 +4,7 @@ namespace App\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Form\FormMapper;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
@@ -15,6 +16,7 @@ class ActionTypeAdmin extends AbstractAdmin
     {
         $form
             ->add('name', TextType::class)
+            ->add('enabled', CheckboxType::class)
         ;
     }
 }

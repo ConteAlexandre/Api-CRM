@@ -119,6 +119,11 @@ class User implements UserInterface
         $this->actions = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return (string) $this->username;
+    }
+
     /**
      * @return int|null
      */

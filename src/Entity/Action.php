@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ActionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * @ORM\Entity(repositoryClass=ActionRepository::class)
@@ -16,6 +17,11 @@ class Action
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
 
     /**
      * @ORM\ManyToOne(targetEntity=ActionType::class, inversedBy="action")
@@ -52,12 +58,37 @@ class Action
      */
     private $exchange;
 
+    public function __toString()
+    {
+        return (string) $this->title;
+    }
+
     /**
      * @return int|null
      */
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
