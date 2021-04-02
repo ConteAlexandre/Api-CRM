@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\Account\ProfileFormType;
 use App\Manager\UserManager;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
@@ -52,6 +53,9 @@ class UserController extends AbstractController
      * @Route("/updateProfile" , name="updateProfile")
      */
     public function updateProfil(){
+        $response = new JsonResponse();
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileFormType::class, $user);
 
     }
 
