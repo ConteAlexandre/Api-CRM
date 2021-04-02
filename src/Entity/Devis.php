@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=DevisRepository::class)
@@ -27,6 +28,14 @@ class Devis
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The reference must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The reference must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $reference;

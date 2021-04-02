@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -27,21 +28,49 @@ class Client
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The firstName must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The firstName must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $firstName;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The lastName must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The lastName must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $lastName;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Assert\Length(
+     *     min="15",
+     *     minMessage="The email must do {{ limit }} characters minimum !",
+     *     max="100",
+     *     maxMessage="The email must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=150, name="email")
      */
     private $email;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\DateTime()
+     *
      * @ORM\Column(type="date")
      */
     private $birthday;

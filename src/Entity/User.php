@@ -33,24 +33,57 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="5",
+     *     minMessage="The username must do {{ limit }} characters minimum !",
+     *     max="50",
+     *     maxMessage="The username must do {{ limit }} characters maximum !",
+     * )
+     *
      * @ORM\Column(type="string", length=150)
      * @Serializer\Groups({"user"})
      */
     private $username;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The firstName must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The firstName must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      * @Serializer\Groups({"user"})
      */
     private $firstName;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The lastName must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The lastName must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      * @Serializer\Groups({"user"})
      */
     private $lastName;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Assert\Length(
+     *     min="15",
+     *     minMessage="The email must do {{ limit }} characters minimum !",
+     *     max="100",
+     *     maxMessage="The email must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=150)
      * @Serializer\Groups({"user"})
      */

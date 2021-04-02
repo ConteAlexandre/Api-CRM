@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
@@ -27,16 +28,33 @@ class Invoice
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The title must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The title must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=255)
      */
     private $reference;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="20",
+     *     minMessage="The title must do {{ limit }} characters minimum !",
+     * )
+     *
      * @ORM\Column(type="text")
      */
     private $description;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\PositiveOrZero()
+     *
      * @ORM\Column(type="integer")
      */
     private $price;
