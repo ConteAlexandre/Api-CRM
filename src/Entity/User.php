@@ -119,6 +119,9 @@ class User implements UserInterface
         $this->actions = new ArrayCollection();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->username;
@@ -383,11 +386,19 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
+    /**
+     * @param string $phoneNumber
+     *
+     * @return $this
+     */
     public function setPhoneNumber(string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;

@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
@@ -78,6 +79,26 @@ class ActionsAdmin extends AbstractAdmin
             ->add('title')
             ->add('actionType')
             ->add('description')
+            ->add('user')
+            ->add('client')
+            ->add('invoice')
+            ->add('devis')
+            ->add('exchange')
+            ->add('createdAt')
+            ->add('updatedAt')
+            ->add('createdBy')
+            ->add('updatedBy')
+        ;
+    }
+
+    /**
+     * @param DatagridMapper $filter
+     */
+    protected function configureDatagridFilters(DatagridMapper $filter)
+    {
+        $filter
+            ->add('title')
+            ->add('actionType')
             ->add('user')
             ->add('client')
             ->add('invoice')
