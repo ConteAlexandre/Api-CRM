@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Form\Account\ProfileFormType;
 use App\Manager\UserManager;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,7 +32,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/profile", name="profile")
+     * @Route("/profile", name="profile", methods={"GET"})
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
@@ -48,11 +50,17 @@ class UserController extends AbstractController
     {
         return $serializer->serialize($objet,"json", SerializationContext::create()->setGroups(array($groupe)));
     }
-/**
-     * @Route("/updateProfile" , name="updateProfile")
-     */
-    public function updateProfil(){
 
+    /**
+     * @Route("/updateProfile" , name="updateProfile", methods={"PUT"})
+     * @param Request $request
+     */
+    public function updateProfil(Request $request){
+            $data = json_decode($request->getContent(), true);
+            $user = $this->getUser();
+            $form = $this->createForm(ProfileFormType::class, $user);
+            $form->submit($data);
+            $this->userManager->save($user);
     }
 
 }
