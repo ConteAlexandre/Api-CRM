@@ -18,9 +18,9 @@ class Action
     private $id;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\ManyToOne(targetEntity=ActionType::class, inversedBy="action")
      */
-    private $type = [];
+    private $actionType;
 
     /**
      * @ORM\Column(type="text")
@@ -61,21 +61,21 @@ class Action
     }
 
     /**
-     * @return array|null
+     * @return ActionType|null
      */
-    public function getType(): ?array
+    public function getActionType(): ?ActionType
     {
-        return $this->type;
+        return $this->actionType;
     }
 
     /**
-     * @param array $type
+     * @param ActionType|null $actionType
      *
      * @return $this
      */
-    public function setType(array $type): self
+    public function setActionType(?ActionType $actionType): self
     {
-        $this->type = $type;
+        $this->actionType = $actionType;
 
         return $this;
     }
