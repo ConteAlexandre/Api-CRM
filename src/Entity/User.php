@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phoneNumber;
+
 
     /**
      * @Gedmo\Slug(fields={"lastName", "firstName"})
@@ -103,21 +108,39 @@ class User implements UserInterface
     private $isArchived;
 
     /**
-     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Client::class, mappedBy="user")
      */
-    private $actions;
+    private $client;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Invoice::class, mappedBy="user")
      */
-    private $phoneNumber;
+    private $invoice;
 
     /**
-     * User constructor.
+     * @ORM\OneToMany(targetEntity=Devis::class, mappedBy="user")
      */
+    private $devis;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Exchange::class, mappedBy="user")
+     */
+    private $Exchange;
+
     public function __construct()
     {
-        $this->actions = new ArrayCollection();
+        $this->client = new ArrayCollection();
+        $this->invoice = new ArrayCollection();
+        $this->devis = new ArrayCollection();
+        $this->Exchange = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->username;
     }
 
     /**
@@ -253,6 +276,26 @@ class User implements UserInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     *
+     * @return $this
+     */
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
      * @return array|string[]|null
      */
     public function getRoles(): ?array
@@ -340,53 +383,121 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Action[]
+     * @return Collection|Client[]
      */
-    public function getActions(): Collection
+    public function getClient(): Collection
     {
-        return $this->actions;
+        return $this->client;
     }
 
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function addAction(Action $action): self
+    public function addClient(Client $client): self
     {
-        if (!$this->actions->contains($action)) {
-            $this->actions[] = $action;
-            $action->setUser($this);
+        if (!$this->client->contains($client)) {
+            $this->client[] = $client;
+            $client->setUser($this);
         }
 
         return $this;
     }
 
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function removeAction(Action $action): self
+    public function removeClient(Client $client): self
     {
-        if ($this->actions->removeElement($action)) {
+        if ($this->client->removeElement($client)) {
             // set the owning side to null (unless already changed)
-            if ($action->getUser() === $this) {
-                $action->setUser(null);
+            if ($client->getUser() === $this) {
+                $client->setUser(null);
             }
         }
 
         return $this;
     }
 
-    public function getPhoneNumber(): ?string
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoice(): Collection
     {
-        return $this->phoneNumber;
+        return $this->invoice;
     }
 
-    public function setPhoneNumber(string $phoneNumber): self
+    public function addInvoice(Invoice $invoice): self
     {
-        $this->phoneNumber = $phoneNumber;
+        if (!$this->invoice->contains($invoice)) {
+            $this->invoice[] = $invoice;
+            $invoice->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoice->removeElement($invoice)) {
+            // set the owning side to null (unless already changed)
+            if ($invoice->getUser() === $this) {
+                $invoice->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Devis[]
+     */
+    public function getDevis(): Collection
+    {
+        return $this->devis;
+    }
+
+    public function addDevi(Devis $devi): self
+    {
+        if (!$this->devis->contains($devi)) {
+            $this->devis[] = $devi;
+            $devi->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDevi(Devis $devi): self
+    {
+        if ($this->devis->removeElement($devi)) {
+            // set the owning side to null (unless already changed)
+            if ($devi->getUser() === $this) {
+                $devi->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Exchange[]
+     */
+    public function getExchange(): Collection
+    {
+        return $this->Exchange;
+    }
+
+    public function addExchange(Exchange $exchange): self
+    {
+        if (!$this->Exchange->contains($exchange)) {
+            $this->Exchange[] = $exchange;
+            $exchange->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExchange(Exchange $exchange): self
+    {
+        if ($this->Exchange->removeElement($exchange)) {
+            // set the owning side to null (unless already changed)
+            if ($exchange->getUser() === $this) {
+                $exchange->setUser(null);
+            }
+        }
 
         return $this;
     }

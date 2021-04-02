@@ -42,6 +42,11 @@ class Invoice
     private $price;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="invoice")
+     */
+    private $user;
+
+    /**
      * @ORM\OneToMany(targetEntity=Action::class, mappedBy="invoice")
      */
     private $actions;
@@ -52,6 +57,14 @@ class Invoice
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->reference;
     }
 
     /**
@@ -118,6 +131,26 @@ class Invoice
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

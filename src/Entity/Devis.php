@@ -32,6 +32,11 @@ class Devis
     private $reference;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="devis")
+     */
+    private $user;
+
+    /**
      * @ORM\OneToMany(targetEntity=Action::class, mappedBy="devis")
      */
     private $actions;
@@ -42,6 +47,14 @@ class Devis
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->reference;
     }
 
     /**
@@ -68,6 +81,26 @@ class Devis
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -62,6 +62,11 @@ class Client
     private $clientActivity;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="client")
+     */
+    private $user;
+
+    /**
      * @ORM\OneToMany(targetEntity=Action::class, mappedBy="client")
      */
     private $actions;
@@ -214,6 +219,26 @@ class Client
     public function setClientActivity(?ClientActivity $clientActivity): self
     {
         $this->clientActivity = $clientActivity;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

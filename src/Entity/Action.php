@@ -18,21 +18,6 @@ class Action
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ActionType::class, inversedBy="action")
-     */
-    private $actionType;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="actions")
-     */
-    private $user;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="actions")
      */
     private $client;
@@ -43,14 +28,14 @@ class Action
     private $invoice;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Devis::class, inversedBy="actions")
-     */
-    private $devis;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Exchange::class, inversedBy="actions")
      */
     private $exchange;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Devis::class, inversedBy="actions")
+     */
+    private $devis;
 
     /**
      * @return int|null
@@ -58,66 +43,6 @@ class Action
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return ActionType|null
-     */
-    public function getActionType(): ?ActionType
-    {
-        return $this->actionType;
-    }
-
-    /**
-     * @param ActionType|null $actionType
-     *
-     * @return $this
-     */
-    public function setActionType(?ActionType $actionType): self
-    {
-        $this->actionType = $actionType;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return $this
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     *
-     * @return $this
-     */
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**
@@ -161,26 +86,6 @@ class Action
     }
 
     /**
-     * @return Devis|null
-     */
-    public function getDevis(): ?Devis
-    {
-        return $this->devis;
-    }
-
-    /**
-     * @param Devis|null $devis
-     *
-     * @return $this
-     */
-    public function setDevis(?Devis $devis): self
-    {
-        $this->devis = $devis;
-
-        return $this;
-    }
-
-    /**
      * @return Exchange|null
      */
     public function getExchange(): ?Exchange
@@ -196,6 +101,26 @@ class Action
     public function setExchange(?Exchange $exchange): self
     {
         $this->exchange = $exchange;
+
+        return $this;
+    }
+
+    /**
+     * @return Devis|null
+     */
+    public function getDevis(): ?Devis
+    {
+        return $this->devis;
+    }
+
+    /**
+     * @param Devis|null $devis
+     *
+     * @return $this
+     */
+    public function setDevis(?Devis $devis): self
+    {
+        $this->devis = $devis;
 
         return $this;
     }
