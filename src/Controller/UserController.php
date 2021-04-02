@@ -10,7 +10,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/**
+ * Class UserController
+ *
+ * @Route("/api", name="api_")
+ */
 class UserController extends AbstractController
 {
 
@@ -26,14 +30,14 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/{slug}/profile", name="profile")
-     * @param $slug
+     * @Route("/profile", name="profile")
      * @param SerializerInterface $serializer
      * @return JsonResponse
      */
-    public function profile($slug, SerializerInterface $serializer): JsonResponse
+    public function profile(SerializerInterface $serializer): JsonResponse
     {
         $response = new JsonResponse();
+        $slug = $this->getUser()->getSlug();
         $user = $this->userManager->getUserBySlug($slug);
             $jsonContent = $this->serializeUser($user,$serializer);
             $response->setContent($jsonContent);
