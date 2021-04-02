@@ -107,6 +107,11 @@ class User implements UserInterface
     private $actions;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phoneNumber;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -369,6 +374,18 @@ class User implements UserInterface
                 $action->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
 
         return $this;
     }
