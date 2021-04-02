@@ -42,19 +42,6 @@ class Exchange
     private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="exchange")
-     */
-    private $actions;
-
-    /**
-     * Exchange constructor.
-     */
-    public function __construct()
-    {
-        $this->actions = new ArrayCollection();
-    }
-
-    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -118,46 +105,6 @@ class Exchange
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Action[]
-     */
-    public function getActions(): Collection
-    {
-        return $this->actions;
-    }
-
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function addAction(Action $action): self
-    {
-        if (!$this->actions->contains($action)) {
-            $this->actions[] = $action;
-            $action->setExchange($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function removeAction(Action $action): self
-    {
-        if ($this->actions->removeElement($action)) {
-            // set the owning side to null (unless already changed)
-            if ($action->getExchange() === $this) {
-                $action->setExchange(null);
-            }
-        }
 
         return $this;
     }

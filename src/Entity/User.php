@@ -74,6 +74,11 @@ class User implements UserInterface
      */
     private $plainPassword;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phoneNumber;
+
 
     /**
      * @Gedmo\Slug(fields={"lastName", "firstName"})
@@ -101,24 +106,6 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isArchived;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="user")
-     */
-    private $actions;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $phoneNumber;
-
-    /**
-     * User constructor.
-     */
-    public function __construct()
-    {
-        $this->actions = new ArrayCollection();
-    }
 
     /**
      * @return string
@@ -261,6 +248,26 @@ class User implements UserInterface
     }
 
     /**
+     * @return string|null
+     */
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     *
+     * @return $this
+     */
+    public function setPhoneNumber(string $phoneNumber): self
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
      * @return array|string[]|null
      */
     public function getRoles(): ?array
@@ -345,65 +352,5 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    /**
-     * @return Collection|Action[]
-     */
-    public function getActions(): Collection
-    {
-        return $this->actions;
-    }
-
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function addAction(Action $action): self
-    {
-        if (!$this->actions->contains($action)) {
-            $this->actions[] = $action;
-            $action->setUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Action $action
-     *
-     * @return $this
-     */
-    public function removeAction(Action $action): self
-    {
-        if ($this->actions->removeElement($action)) {
-            // set the owning side to null (unless already changed)
-            if ($action->getUser() === $this) {
-                $action->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPhoneNumber(): ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * @param string $phoneNumber
-     *
-     * @return $this
-     */
-    public function setPhoneNumber(string $phoneNumber): self
-    {
-        $this->phoneNumber = $phoneNumber;
-
-        return $this;
     }
 }
