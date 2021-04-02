@@ -14,10 +14,34 @@ services:
     class: App\Admin\ClientAdmin
     arguments: [ ~, App\Entity\Client, ~ ]
     tags:
-      - { name: sonata.admin, manager_type: orm, label: ClientActivity, group: Clients }
+      - { name: sonata.admin, manager_type: orm, label: Clients, group: Clients }
 
   Users:
     class: App\Admin\UserAdmin
     arguments: [ ~, App\Entity\User, ~ ]
     tags:
       - { name: sonata.admin, manager_type: orm, label: User, group: Users }
+
+  Actions:
+    class: App\Admin\ActionAdmin
+    arguments: [ ~, App\Entity\Action, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Actions, group: Actions }
+
+  Devis:
+    class: App\Admin\DevisAdmin
+    arguments: [ ~, App\Entity\Devis, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Devis, group: Transactions }
+
+  Invoices:
+    class: App\Admin\InvoiceAdmin
+    arguments: [ ~, App\Entity\Invoice, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Invoices, group: Transactions }
+
+  Exchanges:
+    class: App\Admin\ExchangeAdmin
+    arguments: [ ~, App\Entity\Exchange, ~ ]
+    tags:
+      - { name: sonata.admin, manager_type: orm, label: Exchanges, group: Transactions }

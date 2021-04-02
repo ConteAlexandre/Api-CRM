@@ -4,12 +4,17 @@ namespace App\Entity;
 
 use App\Repository\ActionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ActionRepository::class)
  */
 class Action
 {
+    use TimestampableEntity,
+        BlameableEntity;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
