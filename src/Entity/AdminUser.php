@@ -9,6 +9,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AdminUserRepository::class)
@@ -27,11 +28,28 @@ class AdminUser implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="5",
+     *     minMessage="The username must do {{ limit }} characters minimum !",
+     *     max="50",
+     *     maxMessage="The username must do {{ limit }} characters maximum !",
+     * )
+     *
      * @ORM\Column(type="string", length=150)
      */
     private $username;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     * @Assert\Length(
+     *     min="15",
+     *     minMessage="The email must do {{ limit }} characters minimum !",
+     *     max="100",
+     *     maxMessage="The email must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $email;

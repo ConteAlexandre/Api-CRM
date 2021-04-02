@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bundle\MakerBundle\Str;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClientActivityRepository::class)
@@ -28,6 +29,14 @@ class ClientActivity
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="The name must do {{ limit }} characters minimum !",
+     *     max="30",
+     *     maxMessage="The name must do {{ limit }} characters maximum !"
+     * )
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $name;
