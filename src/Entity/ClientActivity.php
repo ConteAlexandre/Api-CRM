@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bundle\MakerBundle\Str;
 
 /**
  * @ORM\Entity(repositoryClass=ClientActivityRepository::class)
@@ -42,6 +43,14 @@ class ClientActivity
     public function __construct()
     {
         $this->clients = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->name;
     }
 
     /**

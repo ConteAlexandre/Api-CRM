@@ -70,6 +70,14 @@ class AdminUser implements UserInterface
     private $resetToken;
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->username;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int

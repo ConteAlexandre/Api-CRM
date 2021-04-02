@@ -42,6 +42,32 @@ class Invoice
     private $price;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="invoice")
+     */
+    private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Action::class, mappedBy="invoice")
+     */
+    private $actions;
+
+    /**
+     * Invoice constructor.
+     */
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->reference;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -105,6 +131,66 @@ class Invoice
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return User|null
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User|null $user
+     *
+     * @return $this
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Action[]
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function addAction(Action $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setInvoice($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Action $action
+     *
+     * @return $this
+     */
+    public function removeAction(Action $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getInvoice() === $this) {
+                $action->setInvoice(null);
+            }
+        }
 
         return $this;
     }
