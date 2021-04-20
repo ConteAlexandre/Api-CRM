@@ -28,36 +28,17 @@ class Invoice
     private $id;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *     min="3",
-     *     minMessage="The title must do {{ limit }} characters minimum !",
-     *     max="30",
-     *     maxMessage="The title must do {{ limit }} characters maximum !"
-     * )
-     *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, name="filename")
      */
-    private $reference;
+    private $filename;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(
-     *     min="20",
-     *     minMessage="The title must do {{ limit }} characters minimum !",
-     * )
-     *
-     * @ORM\Column(type="text")
+     * Invoice constructor.
      */
-    private $description;
-
-    /**
-     * @Assert\NotBlank()
-     * @Assert\PositiveOrZero()
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $price;
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="invoice")
@@ -70,20 +51,10 @@ class Invoice
     private $actions;
 
     /**
-     * Invoice constructor.
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="invoices")
+     * @ORM\JoinColumn(nullable=false)
      */
-    public function __construct()
-    {
-        $this->actions = new ArrayCollection();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->reference;
-    }
+    private $client;
 
     /**
      * @return int|null
@@ -96,59 +67,19 @@ class Invoice
     /**
      * @return string|null
      */
-    public function getReference(): ?string
+    public function getFilename(): ?string
     {
-        return $this->reference;
+        return $this->filename;
     }
 
     /**
-     * @param string $reference
+     * @param string $filename
      *
      * @return $this
      */
-    public function setReference(string $reference): self
+    public function setFilename(string $filename): self
     {
-        $this->reference = $reference;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return $this
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPrice(): ?int
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param int $price
-     *
-     * @return $this
-     */
-    public function setPrice(int $price): self
-    {
-        $this->price = $price;
+        $this->filename = $filename;
 
         return $this;
     }
@@ -209,6 +140,21 @@ class Invoice
                 $action->setInvoice(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Client|null
+     */
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }

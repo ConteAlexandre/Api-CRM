@@ -122,11 +122,17 @@ class Client
     private $isArchived;
 
     /**
+     * @ORM\OneToMany(targetEntity=Invoice::class, mappedBy="client")
+     */
+    private $invoices;
+
+    /**
      * Client constructor.
      */
     public function __construct()
     {
         $this->actions = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     /**
@@ -341,14 +347,62 @@ class Client
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getIsArchived(): ?bool
     {
         return $this->isArchived;
     }
 
+    /**
+     * @param bool $isArchived
+     *
+     * @return $this
+     */
     public function setIsArchived(bool $isArchived): self
     {
         $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    /**
+     * @param Invoice $invoice
+     *
+     * @return $this
+     */
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setClient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Invoice $invoice
+     *
+     * @return $this
+     */
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->removeElement($invoice)) {
+            // set the owning side to null (unless already changed)
+            if ($invoice->getClient() === $this) {
+                $invoice->setClient(null);
+            }
+        }
 
         return $this;
     }
