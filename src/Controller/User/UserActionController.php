@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Form\InvoiceFormType;
 use App\Manager\ClientManager;
 use App\Manager\InvoiceManager;
+use App\Service\InvoiceUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -66,11 +67,12 @@ class UserActionController extends AbstractController
      * @param InvoiceManager     $invoiceManager
      * @param Request            $request
      * @param ValidatorInterface $validator
+     * @param InvoiceUploader    $invoiceUploader
      *
      * @return JsonResponse
      * @throws TransportExceptionInterface
      */
-    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, ValidatorInterface $validator): JsonResponse
+    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, ValidatorInterface $validator, InvoiceUploader $invoiceUploader): JsonResponse
     {
         $data = json_encode($request->getContent(), true);
         $invoice = $invoiceManager->createInvoice();
@@ -83,6 +85,12 @@ class UserActionController extends AbstractController
             foreach ($violation as $error) {
                 return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
             }
+        }
+
+        $invoiceFile = $data['filename'];
+        if ($invoiceFile) {
+            $invoiceFilename = $invoiceUploader->upload($invoiceFile);
+            $invoice->setFilename($invoiceFilename);
         }
 
         $invoiceManager->save($invoice);
