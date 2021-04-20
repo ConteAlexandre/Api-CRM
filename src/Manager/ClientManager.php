@@ -2,44 +2,76 @@
 
 namespace App\Manager;
 
+
 use App\Entity\Client;
 use App\Repository\ClientRepository;
-use Psr\Log\LoggerInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
-/**
- * Class ClientManager
- */
 class ClientManager
 {
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $em;
+
+
     /**
      * @var ClientRepository
      */
-    private $clientRepository;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    protected $clientRepository;
 
     /**
      * ClientManager constructor.
-     *
+     * @param EntityManagerInterface $entityManager
      * @param ClientRepository $clientRepository
-     * @param LoggerInterface  $logger
      */
-    public function __construct(ClientRepository $clientRepository, LoggerInterface $logger)
+    public function __construct(EntityManagerInterface $entityManager, ClientRepository $clientRepository)
     {
+        $this->em = $entityManager;
         $this->clientRepository = $clientRepository;
-        $this->logger = $logger;
     }
 
     /**
+     * @return Client
+     */
+    public function createClient(): Client
+    {
+        $client = new Client();
+        return $client;
+    }
+
+
+    /**
+     * @return Client[]
+     */
+    public function getAllClient(){
+        $client = $this->clientRepository->findAll();
+        return $client;
+    }
+
+
+    /**
      * @param $slug
-     *
      * @return Client
      */
     public function getClientBySlug($slug)
     {
-        return $this->clientRepository->findOneBySlug($slug);
+        $client = $this->clientRepository->findOneBySlug($slug);
+        return $client;
+    }
+
+    /**
+     * @param Client $client
+     * @param bool $andFlush
+     *
+     * @throws \Exception
+     */
+    public function save(Client $client, $andFlush = true)
+    {
+        $this->em->persist($client);
+        if ($andFlush) {
+            $this->em->flush();
+        }
     }
 }
