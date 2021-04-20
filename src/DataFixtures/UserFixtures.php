@@ -43,7 +43,6 @@ class UserFixtures extends AbstractFixtures
             'phoneNumber'=> '1045454545',
             'password' => $passwordMichel,
             'salt' => md5(random_bytes(32)),
-            'is_archived' => false,
             'roles' => ['ROLE_USER'],
             'enabled' => true,
         ];
@@ -51,6 +50,7 @@ class UserFixtures extends AbstractFixtures
         foreach ($dataMichel as $prop => $value) {
             $this->propertyAccessor->setValue($michel, $prop, $value);
         }
+        $this->setReference('user', $michel);
 
         $manager->persist($michel);
     }
@@ -74,7 +74,6 @@ class UserFixtures extends AbstractFixtures
                 'phoneNumber'=> $this->faker->phoneNumber,
                 'password' => $password,
                 'salt' => md5(random_bytes(32)),
-                'is_archived' => false,
                 'roles' => ['ROLE_USER'],
                 'enabled' => true,
             ];
