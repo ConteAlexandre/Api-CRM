@@ -61,6 +61,7 @@ class Client
     /**
      * @Gedmo\Slug(fields={"lastName", "firstName"})
      * @ORM\Column(length=128, unique=true)
+     * @Serializer\Groups({"client"})
      */
     private $slug;
 
