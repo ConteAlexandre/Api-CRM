@@ -29,7 +29,7 @@ class UserManager
      * AdminUserManager constructor.
      *
      * @param EntityManagerInterface       $entityManager
-     * @param AdminUserRepository          $userUserRepository
+     * @param UserRepository          $userUserRepository
      * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(EntityManagerInterface $entityManager, UserRepository $userUserRepository, UserPasswordEncoderInterface $encoder)

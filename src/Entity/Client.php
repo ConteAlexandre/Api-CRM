@@ -101,6 +101,11 @@ class Client
     private $actions;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isArchived;
+
+    /**
      * Client constructor.
      */
     public function __construct()
@@ -308,6 +313,18 @@ class Client
                 $action->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setIsArchived(bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
 
         return $this;
     }
