@@ -6,6 +6,7 @@ namespace App\Controller\Client;
 
 use App\Form\Account\RegisterClientFormType;
 use App\Manager\ClientManager;
+use http\Client;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -98,6 +99,33 @@ class ClientController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         $client = $this->clientManager->getClientBySlug($slug);
+        $form = $this->createForm(RegisterClientFormType::class, $client);
+        $form->submit($data);
+
+        $violation = $validator->validate($client);
+        if (0 !== count($violation)) {
+            foreach ($violation as $error) {
+                return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+        }
+        $this->clientManager->save($client);
+        return JsonResponse::fromJsonString($this->serializeClient($client,$serializer));
+    }
+
+    /**
+     * @Route("/createClient", name="createClient" , methods={"POST"})
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function createClient(Request $request, SerializerInterface $serializer, ValidatorInterface $validator) : JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $user = $this->getUser();
+        $client = $this->clientManager->createClient();
+        $client->setUser($user);
         $form = $this->createForm(RegisterClientFormType::class, $client);
         $form->submit($data);
 
