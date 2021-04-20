@@ -43,7 +43,6 @@ class UserFixtures extends AbstractFixtures
             'phoneNumber'=> '1045454545',
             'password' => $passwordMichel,
             'salt' => md5(random_bytes(32)),
-            'is_archived' => false,
             'roles' => ['ROLE_USER'],
             'enabled' => true,
         ];
@@ -75,7 +74,6 @@ class UserFixtures extends AbstractFixtures
                 'phoneNumber'=> $this->faker->phoneNumber,
                 'password' => $password,
                 'salt' => md5(random_bytes(32)),
-                'is_archived' => false,
                 'roles' => ['ROLE_USER'],
                 'enabled' => true,
             ];
