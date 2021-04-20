@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +18,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
  */
 class InvoiceAdmin extends AbstractAdmin
 {
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection
+            ->add('send', $this->getRouterIdParameter().'/send');
+    }
+
     /**
      * @param FormMapper $form
      */
@@ -29,6 +36,7 @@ class InvoiceAdmin extends AbstractAdmin
             ->add('user', ModelType::class, [
                 'property' => 'username'
             ])
+            ->add('enabled')
         ;
     }
 
@@ -48,6 +56,13 @@ class InvoiceAdmin extends AbstractAdmin
             ->add('createdAt')
             ->add('createdBy')
             ->add('enabled')
+            ->add('_action', null, [
+                'actions' => [
+                    'send' => [
+                        'template' => 'admin/CRUD/list_action_send.html.twig',
+                    ],
+                ],
+            ])
         ;
     }
 

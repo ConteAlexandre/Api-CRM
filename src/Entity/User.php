@@ -136,11 +136,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isArchived;
-
-    /**
      * @ORM\OneToMany(targetEntity=Client::class, mappedBy="user")
      */
     private $client;
@@ -383,26 +378,6 @@ class User implements UserInterface
     public function setResetToken(?string $resetToken): self
     {
         $this->resetToken = $resetToken;
-
-        return $this;
-    }
-
-    /**
-     * @return bool|null
-     */
-    public function getIsArchived(): ?bool
-    {
-        return $this->isArchived;
-    }
-
-    /**
-     * @param bool $isArchived
-     *
-     * @return $this
-     */
-    public function setIsArchived(bool $isArchived): self
-    {
-        $this->isArchived = $isArchived;
 
         return $this;
     }
