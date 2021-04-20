@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -76,16 +77,19 @@ class Client
      * @Assert\DateTime()
      *
      * @ORM\Column(type="date")
+     * @Serializer\Groups({"client"})
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"client"})
      */
     private $numberPhone;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Serializer\Groups({"client"})
      */
     private $isProspect;
 

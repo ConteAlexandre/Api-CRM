@@ -51,6 +51,7 @@ class UserFixtures extends AbstractFixtures
         foreach ($dataMichel as $prop => $value) {
             $this->propertyAccessor->setValue($michel, $prop, $value);
         }
+        $this->setReference('user', $michel);
 
         $manager->persist($michel);
     }

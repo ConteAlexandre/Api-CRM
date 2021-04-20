@@ -42,6 +42,16 @@ class ClientManager
         return $client;
     }
 
+
+    /**
+     * @return Client[]
+     */
+    public function getAllClient(){
+        $client = $this->clientRepository->findAll();
+        return $client;
+    }
+
+
     /**
      * @param $slug
      * @return Client
