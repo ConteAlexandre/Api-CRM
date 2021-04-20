@@ -28,7 +28,7 @@ class UserActionController extends AbstractController
 
             $this->addFlash('success', 'The client is archived');
 
-            return $this->redirectToRoute('list_client');
+            return $this->redirectToRoute('api_clients');
         } else {
             throw new AccessDeniedException('Not Authorized');
         }
