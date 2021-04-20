@@ -24,6 +24,7 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"client"})
      */
     private $id;
 
@@ -37,6 +38,7 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"client"})
      */
     private $firstName;
 
@@ -50,6 +52,7 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=100)
+     * @Serializer\Groups({"client"})
      */
     private $lastName;
 
@@ -64,6 +67,7 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=150, name="email")
+     * @Serializer\Groups({"client"})
      */
     private $email;
 
