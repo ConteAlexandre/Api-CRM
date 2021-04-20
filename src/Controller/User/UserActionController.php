@@ -6,13 +6,18 @@ use App\Manager\ClientManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserActionController
+ *
+ * @Route("/api", name="user_action_")
  */
 class UserActionController extends AbstractController
 {
     /**
+     * @Route("/archived", name="archived", methods={"POST"})
+     *
      * @param               $slug
      * @param ClientManager $clientManager
      *
@@ -32,5 +37,10 @@ class UserActionController extends AbstractController
         } else {
             throw new AccessDeniedException('Not Authorized');
         }
+    }
+
+    public function uploadInvoiceAction()
+    {
+        
     }
 }
