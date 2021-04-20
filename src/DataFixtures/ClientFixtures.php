@@ -45,6 +45,7 @@ class ClientFixtures extends AbstractFixtures implements DependentFixtureInterfa
                 'numberPhone'=> $this->faker->phoneNumber,
                 'isProspect'=> $this->faker->boolean(),
                 'user' => $this->getReference('user'),
+                'is_archived' => false,
                 'enabled' => true,
             ];
 
