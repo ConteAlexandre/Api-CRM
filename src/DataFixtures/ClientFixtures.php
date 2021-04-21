@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Client;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use libphonenumber\PhoneNumber;
 
 /**
  * Class ClientFixtures
@@ -34,6 +35,8 @@ class ClientFixtures extends AbstractFixtures implements DependentFixtureInterfa
      */
     public function loadClient(ObjectManager $manager)
     {
+        $phoneNumber = new PhoneNumber();
+        $phoneNumber->setCountryCode('33')->setNationalNumber('123456789');
 
         for ($i = 0; $i < self::NUMBER_CLIENT; $i++) {
             $client = new Client();
@@ -42,7 +45,7 @@ class ClientFixtures extends AbstractFixtures implements DependentFixtureInterfa
                 'last_name' => $this->faker->lastName,
                 'email' => $this->faker->email,
                 'birthday'=> $this->faker->dateTime,
-                'numberPhone'=> $this->faker->phoneNumber,
+                'numberPhone'=> $phoneNumber,
                 'isProspect'=> $this->faker->boolean(),
                 'user' => $this->getReference('user'),
                 'is_archived' => false,
