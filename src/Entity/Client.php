@@ -127,12 +127,18 @@ class Client
     private $invoices;
 
     /**
+     * @ORM\OneToMany(targetEntity=Exchange::class, mappedBy="client")
+     */
+    private $exchanges;
+
+    /**
      * Client constructor.
      */
     public function __construct()
     {
         $this->actions = new ArrayCollection();
         $this->invoices = new ArrayCollection();
+        $this->exchanges = new ArrayCollection();
     }
 
     /**
@@ -409,6 +415,36 @@ class Client
             // set the owning side to null (unless already changed)
             if ($invoice->getClient() === $this) {
                 $invoice->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Exchange[]
+     */
+    public function getExchanges(): Collection
+    {
+        return $this->exchanges;
+    }
+
+    public function addExchange(Exchange $exchange): self
+    {
+        if (!$this->exchanges->contains($exchange)) {
+            $this->exchanges[] = $exchange;
+            $exchange->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExchange(Exchange $exchange): self
+    {
+        if ($this->exchanges->removeElement($exchange)) {
+            // set the owning side to null (unless already changed)
+            if ($exchange->getClient() === $this) {
+                $exchange->setClient(null);
             }
         }
 

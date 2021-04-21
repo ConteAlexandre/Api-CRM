@@ -54,7 +54,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/updateProfile", name="updateProfile", methods={"PUT"})
+     * @Route("/updateprofile", name="updateProfile", methods={"PUT"})
      * @param Request $request
      * @param SerializerInterface $serializer
      * @return JsonResponse
@@ -77,7 +77,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/updateUserPassword", name="updateUserPassword", methods={"put"})
+     * @Route("/updateuserpassword", name="updateUserPassword", methods={"put"})
      * @param Request $request
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
