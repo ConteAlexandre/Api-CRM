@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Invoice{% endblock title %}
+
+{% block body %}
+    <h4>Create invoice</h4>
+    {{ form_start(form) }}
+    {{ form_label(form.filename) }}
+    {{ form_errors(form.filename) }}
+    {{ form_widget(form.filename) }}
+    {{ form_label(form.client) }}
+    {{ form_errors(form.client) }}
+    {{ form_widget(form.client) }}
+    <input type="submit" value="Submit">
+    {{ form_end(form) }}
+{% endblock %}

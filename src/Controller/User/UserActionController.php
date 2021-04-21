@@ -20,8 +20,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class UserActionController
- *
- * @Route("/api", name="user_action_")
  */
 class UserActionController extends AbstractController
 {
@@ -63,42 +61,37 @@ class UserActionController extends AbstractController
     }
 
     /**
-     * @Route("/upload/invoice", name="upload_invoice", methods={"GET", "POST"})
+     * @Route("/upload/invoice", name="upload_invoice")
      *
      * @param InvoiceManager     $invoiceManager
      * @param Request            $request
-     * @param ValidatorInterface $validator
      * @param InvoiceUploader    $invoiceUploader
      *
-     * @return JsonResponse
+     * @return Response
      * @throws TransportExceptionInterface
      */
-    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, ValidatorInterface $validator, InvoiceUploader $invoiceUploader): JsonResponse
+    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, InvoiceUploader $invoiceUploader): Response
     {
+        $user = $this->getUser();
         $invoice = $invoiceManager->createInvoice();
         $form = $this->createForm(InvoiceFormType::class, $invoice);
         $form->handleRequest($request);
 
-        if (!$form->isSubmitted()) {
-            throw new BadRequestHttpException('The file must be provided');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $invoiceFile = $form->get('filename')->getData();
+            if ($invoiceFile) {
+                $invoiceFilename = $invoiceUploader->upload($invoiceFile);
+                $invoice->setFilename($invoiceFilename);
+            }
+            $invoiceManager->save($invoice);
+
+            $this->sendMail($form->get('client')->getData());
         }
 
-        if (!$form->isValid()) {
-            return $form;
-        }
-
-        $invoiceFile = $form->get('filename')->getData();
-        dump($form->get('client')->getData());
-        if ($invoiceFile) {
-            $invoiceFilename = $invoiceUploader->upload($invoiceFile);
-            $invoice->setFilename($invoiceFilename);
-        }
-
-        $invoiceManager->save($invoice);
-
-//        $this->sendMail($data['client']->getEmail());
-
-        return new JsonResponse('The invoice has been upload!');
+        return $this->render('user/create_invoice.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -110,7 +103,7 @@ class UserActionController extends AbstractController
     {
         $email = (new Email())
             ->from($this->getUser()->getEmail())
-            ->to($client)
+            ->to($client->getEmail())
             ->subject('Invoice')
             ->text('Test send invoice')
         ;
