@@ -9,6 +9,7 @@ use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Class UserController
  *
- * @Route("/api", name="api_")
+ * @Route("/user", name="user_")
  */
 class UserController extends AbstractController
 {
@@ -34,69 +35,69 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/profile", name="profile", methods={"GET"})
-     * @param SerializerInterface $serializer
+     * @Route("/profile", name="profile")
      * @return JsonResponse
      */
-    public function profile(SerializerInterface $serializer): JsonResponse
+    public function profile(): Response
     {
-        $response = new JsonResponse();
-        $slug = $this->getUser()->getSlug();
-        $user = $this->userManager->getUserBySlug($slug);
-            $jsonContent = $this->serializeUser($user,$serializer);
-            $response->setContent($jsonContent);
-            $response->setStatusCode(Response::HTTP_OK);
-            return $response;
-}
-    private function serializeUser($objet, SerializerInterface $serializer, $groupe="user"): string
-    {
-        return $serializer->serialize($objet,"json", SerializationContext::create()->setGroups(array($groupe)));
+        $user = $this->getUser();
+
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
     }
 
     /**
-     * @Route("/updateProfile", name="updateProfile", methods={"PUT"})
+     * @Route("/update/profile", name="updateProfile")
      * @param Request $request
-     * @param SerializerInterface $serializer
-     * @return JsonResponse
+     *
+     * @return RedirectResponse|Response
      * @throws \Exception
      */
-    public function updateProfil(Request $request, SerializerInterface $serializer, ValidatorInterface $validator){
-            $data = json_decode($request->getContent(), true);
-            $user = $this->getUser();
-            $form = $this->createForm(ProfileFormType::class, $user);
-            $form->submit($data);
+    public function updateProfil(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileFormType::class, $user);
+        $form->handleRequest($request);
 
-            $violation = $validator->validate($user);
-            if (0 !== count($violation)) {
-                foreach ($violation as $error) {
-                    return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
-                }
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->userManager->save($user);
-            return JsonResponse::fromJsonString($this->serializeUser($user,$serializer));
+
+            $this->addFlash('success', 'The profile has been updated');
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        return $this->render('user/profile.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route("/updateUserPassword", name="updateUserPassword", methods={"put"})
+     * @Route("/update/password", name="updateUserPassword")
      * @param Request $request
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @return JsonResponse
+     *
+     * @return RedirectResponse|Response
      * @throws \Exception
      */
-    public function updateUserPassword(Request $request,SerializerInterface $serializer, ValidatorInterface $validator) {
-        $data = json_decode($request->getContent(), true);
+    public function updateUserPassword(Request $request)
+    {
         $user = $this->getUser();
         $form = $this->createForm(PasswordFormType::class, $user);
-        $form->submit($data);
-        $violation = $validator->validate($user);
-        if (0 !== count($violation)) {
-            foreach ($violation as $error) {
-                return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userManager->save($user);
+
+            $this->addFlash('success', 'The password is updated!');
+
+            return $this->redirectToRoute('homepage');
         }
-        $this->userManager->save($user);
-        return JsonResponse::fromJsonString($this->serializeUser($user,$serializer));
+
+        return $this->render('security/update_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 }

@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
+use libphonenumber\PhoneNumber;
 use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
@@ -108,7 +109,9 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var PhoneNumber
+     *
+     * @ORM\Column(type="phone_number", length=255, name="phone_number")
      */
     private $phoneNumber;
 
@@ -304,19 +307,19 @@ class User implements UserInterface
     }
 
     /**
-     * @return string|null
+     * @return PhoneNumber|null
      */
-    public function getPhoneNumber(): ?string
+    public function getPhoneNumber(): ?PhoneNumber
     {
         return $this->phoneNumber;
     }
 
     /**
-     * @param string $phoneNumber
+     * @param PhoneNumber $phoneNumber
      *
      * @return $this
      */
-    public function setPhoneNumber(string $phoneNumber): self
+    public function setPhoneNumber(PhoneNumber $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
 
