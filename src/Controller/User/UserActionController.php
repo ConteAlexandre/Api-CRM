@@ -11,6 +11,7 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -74,20 +75,20 @@ class UserActionController extends AbstractController
      */
     public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, ValidatorInterface $validator, InvoiceUploader $invoiceUploader): JsonResponse
     {
-        $data = json_encode($request->getContent(), true);
         $invoice = $invoiceManager->createInvoice();
         $form = $this->createForm(InvoiceFormType::class, $invoice);
         $form->handleRequest($request);
-        $form->submit($data);
 
-        $violation = $validator->validate($invoice);
-        if (0 != count($violation)) {
-            foreach ($violation as $error) {
-                return new JsonResponse($error->getMessage(), Response::HTTP_BAD_REQUEST);
-            }
+        if (!$form->isSubmitted()) {
+            throw new BadRequestHttpException('The file must be provided');
         }
 
-        $invoiceFile = $data['filename'];
+        if (!$form->isValid()) {
+            return $form;
+        }
+
+        $invoiceFile = $form->get('filename')->getData();
+        dump($form->get('client')->getData());
         if ($invoiceFile) {
             $invoiceFilename = $invoiceUploader->upload($invoiceFile);
             $invoice->setFilename($invoiceFilename);
@@ -95,7 +96,7 @@ class UserActionController extends AbstractController
 
         $invoiceManager->save($invoice);
 
-        $this->sendMail($data['client']->getEmail());
+//        $this->sendMail($data['client']->getEmail());
 
         return new JsonResponse('The invoice has been upload!');
     }

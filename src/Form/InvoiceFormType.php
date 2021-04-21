@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Client;
 use App\Entity\Invoice;
+use App\Form\DataMapper\CustomPropertyPathMapper;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,6 +41,7 @@ class InvoiceFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setDataMapper(new CustomPropertyPathMapper())
             ->add('filename', FileType::class, [
                 'label' => 'Invoice (PDF file)',
                 'constraints' => [

@@ -136,6 +136,14 @@ class Client
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->firstName;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
