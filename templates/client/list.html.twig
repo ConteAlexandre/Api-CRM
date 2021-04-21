@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Clients{% endblock title %}
+
+{% block body %}
+    <table>
+        {% for client in clients %}
+            <td><a href="{{ path('update_client', {'slug': client.slug }) }}">{{ client.firstName }}</a></td>
+            <td>{{ client.lastName }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.clientActivity }}</td>
+            <td>{{ client.isProspect }}</td>
+        {% endfor %}
+    </table>
+{% endblock body %}

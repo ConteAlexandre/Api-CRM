@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile {{ client.firstName }}{% endblock title %}
+
+{% block body %}
+    {{ client.firstName }}
+    {{ client.lastName }}
+    {{ client.email }}
+    {{ client.clientActivity }}
+    {{ client.birthday|date }}
+    {{ client.numberPhone|phone_number_format }}
+    {{ client.isProspect }}
+{% endblock %}

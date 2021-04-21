@@ -3,5 +3,12 @@
 {% block title %}Profile{% endblock title %}
 
 {% block body %}
-
+    {{ user.username }}
+    {{ user.firstName }}
+    {{ user.lastName }}
+    {{ user.email }}
+    {{ user.phoneNumber|phone_number_format }}
+    <a href="{{ path('user_updateProfile') }}">Edit Profile</a>
+    <a href="{{ path('user_updateUserPassword') }}">Update Password</a>
+    <a href="{{ path('clients') }}">List Clients</a>
 {% endblock body %}

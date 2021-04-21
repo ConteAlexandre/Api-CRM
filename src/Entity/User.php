@@ -29,7 +29,6 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"user"})
      */
     private $id;
 
@@ -43,7 +42,6 @@ class User implements UserInterface
      * )
      *
      * @ORM\Column(type="string", length=150)
-     * @Serializer\Groups({"user"})
      */
     private $username;
 
@@ -57,7 +55,6 @@ class User implements UserInterface
      * )
      *
      * @ORM\Column(type="string", length=100)
-     * @Serializer\Groups({"user"})
      */
     private $firstName;
 
@@ -71,7 +68,6 @@ class User implements UserInterface
      * )
      *
      * @ORM\Column(type="string", length=100)
-     * @Serializer\Groups({"user"})
      */
     private $lastName;
 
@@ -86,7 +82,6 @@ class User implements UserInterface
      * )
      *
      * @ORM\Column(type="string", length=150)
-     * @Serializer\Groups({"user"})
      */
     private $email;
 

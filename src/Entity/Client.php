@@ -11,6 +11,7 @@ use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use libphonenumber\PhoneNumber;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -26,7 +27,6 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"client"})
      */
     private $id;
 
@@ -40,7 +40,6 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=100)
-     * @Serializer\Groups({"client"})
      */
     private $firstName;
 
@@ -54,14 +53,12 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=100)
-     * @Serializer\Groups({"client"})
      */
     private $lastName;
 
     /**
      * @Gedmo\Slug(fields={"lastName", "firstName"})
      * @ORM\Column(length=128, unique=true)
-     * @Serializer\Groups({"client"})
      */
     private $slug;
 
@@ -76,7 +73,6 @@ class Client
      * )
      *
      * @ORM\Column(type="string", length=150, name="email")
-     * @Serializer\Groups({"client"})
      */
     private $email;
 
@@ -85,13 +81,13 @@ class Client
      * @Assert\DateTime()
      *
      * @ORM\Column(type="date")
-     * @Serializer\Groups({"client"})
      */
     private $birthday;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Serializer\Groups({"client"})
+     * @var PhoneNumber
+     *
+     * @ORM\Column(type="phone_number", length=255)
      */
     private $numberPhone;
 
@@ -242,19 +238,19 @@ class Client
     }
 
     /**
-     * @return string|null
+     * @return PhoneNumber|null
      */
-    public function getNumberPhone(): ?string
+    public function getNumberPhone(): ?PhoneNumber
     {
         return $this->numberPhone;
     }
 
     /**
-     * @param string $numberPhone
+     * @param PhoneNumber $numberPhone
      *
      * @return $this
      */
-    public function setNumberPhone(string $numberPhone): self
+    public function setNumberPhone(PhoneNumber $numberPhone): self
     {
         $this->numberPhone = $numberPhone;
 
