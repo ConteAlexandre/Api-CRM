@@ -59,14 +59,15 @@ class Exchange
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Exchange")
-     */
-    private $user;
-
-    /**
      * @ORM\OneToMany(targetEntity=Action::class, mappedBy="exchange")
      */
     private $actions;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="exchanges")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
 
     /**
      * Exchange constructor.
@@ -153,26 +154,6 @@ class Exchange
     }
 
     /**
-     * @return User|null
-     */
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    /**
-     * @param User|null $user
-     *
-     * @return $this
-     */
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Action[]
      */
     public function getActions(): Collection
@@ -208,6 +189,18 @@ class Exchange
                 $action->setExchange(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }
