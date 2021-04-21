@@ -85,7 +85,7 @@ class UserActionController extends AbstractController
             }
             $invoiceManager->save($invoice);
 
-            $this->sendMail($form->get('client')->getData());
+            $this->sendMail($form->get('client')->getData(), $this->getParameter('invoice_directory').'/'.$invoice->getFilename());
         }
 
         return $this->render('user/create_invoice.html.twig', [
@@ -96,15 +96,17 @@ class UserActionController extends AbstractController
 
     /**
      * @param $client
+     * @param $invoice
      *
      * @throws TransportExceptionInterface
      */
-    private function sendMail($client)
+    private function sendMail($client, $invoice)
     {
         $email = (new Email())
             ->from($this->getUser()->getEmail())
             ->to($client->getEmail())
             ->subject('Invoice')
+            ->attachFromPath($invoice)
             ->text('Test send invoice')
         ;
 
