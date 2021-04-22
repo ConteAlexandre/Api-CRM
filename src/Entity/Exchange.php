@@ -31,9 +31,9 @@ class Exchange
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min="3",
-     *     minMessage="The title must do {{ limit }} characters minimum !",
-     *     max="30",
-     *     maxMessage="The title must do {{ limit }} characters maximum !"
+     *     minMessage="Le titre doit être de {{ limit }} caractères minimum !",
+     *     max="15",
+     *     maxMessage="Le titre doit être de {{ limit }} caractères maximum !"
      * )
      *
      * @ORM\Column(type="string", length=255)
@@ -50,8 +50,8 @@ class Exchange
     /**
      * @Assert\NotBlank()
      * @Assert\Length(
-     *     min="20",
-     *     minMessage="The title must do {{ limit }} characters minimum !",
+     *     min="5",
+     *     minMessage="Le détatil doit contenir {{ limit }} caractères minimum !",
      * )
      *
      * @ORM\Column(type="text")

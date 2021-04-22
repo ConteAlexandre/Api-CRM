@@ -9,8 +9,10 @@ use App\Entity\Client;
 use App\Entity\Exchange;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,9 +56,12 @@ class AppointmentFormType extends AbstractType
                         ->where('r.user = :user')
                         ->setParameter('user', $this->security->getUser());
             },])
-            ->add('content', TextType::class)
+            ->add('content', TextareaType::class)
             ->add('type',ChoiceType::class,[
                 'multiple' => true,
+                'attr' => [
+                    'class' => 'form-control'
+                ],
                 'choices'  => [
                     'Telephone' => 'Telephone',
                     'Email' => 'Email',
