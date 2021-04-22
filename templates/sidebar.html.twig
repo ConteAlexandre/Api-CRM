@@ -1,81 +1,89 @@
 {% extends 'base.html.twig' %}
     {% block body %}
-        <div class="page-wrapper chiller-theme toggled">
-            <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-            </a>
-            <nav id="sidebar" class="sidebar-wrapper">
-                <div class="sidebar-content">
-                    <div class="sidebar-brand">
-                        <a href="#">Le CRM</a>
-                        <div id="close-sidebar">
+        {% if app.user %}
+            <div class="page-wrapper chiller-theme toggled">
+                <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+                </a>
+                <nav id="sidebar" class="sidebar-wrapper">
+                    <div class="sidebar-content">
+                        <div class="sidebar-brand">
+                            <a href="#">Le CRM</a>
+                            <div id="close-sidebar">
+                            </div>
                         </div>
-                    </div>
-                    <div class="sidebar-header">
-                        <div class="user-pic">
-                            <img class="img-responsive img-rounded"
-                                 src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                                 alt="User picture">
-                        </div>
-                        <div class="user-info">
+                        <div class="sidebar-header">
+                            <div class="user-pic">
+                                <img class="img-responsive img-rounded"
+                                     src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                                     alt="User picture">
+                            </div>
+                            <div class="user-info">
           <span class="user-name">{{ app.user.firstname }}
             <strong>{{ app.user.lastname }}</strong>
           </span>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <span class="user-role">Administrator</span>
-                            {% else %}
-                                <span class="user-role">Commercial</span>
-                            {% endif %}
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <span class="user-role">Administrator</span>
+                                {% else %}
+                                    <span class="user-role">Commercial</span>
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                    <div class="sidebar-menu">
-                        <ul>
-                            <li class="header-menu">
-                                <span>General</span>
-                            </li>
-                            {% if is_granted('ROLE_ADMIN') %}
+                        <div class="sidebar-menu">
+                            <ul>
+                                <li class="header-menu">
+                                    <span>General</span>
+                                </li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li>
+                                        <a href="#">
+                                            <span>Dashboard</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
                                 <li>
                                     <a href="#">
-                                        <span>Dashboard</span>
+                                        <span>Clients</span>
+                                    </a>
+
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span>Prospects</span>
                                     </a>
                                 </li>
-                            {% endif %}
-                            <li>
-                                <a href="#">
-                                    <span>Clients</span>
-                                </a>
+                                <li>
+                                    <a href="#">
+                                        <span>Societies</span>
+                                    </a>
+                                </li>
+                                <li class="header-menu">
+                                    <span>Extra</span>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span>Documentation</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span>Calendar</span>
+                                    </a>
+                                </li>
 
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>Prospects</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>Societies</span>
-                                </a>
-                            </li>
-                            <li class="header-menu">
-                                <span>Extra</span>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>Documentation</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <span>Calendar</span>
-                                </a>
-                            </li>
-
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="sidebar-footer">
-                    <a href="">Parameters</a>
-                    <a href="{{ path('logout') }}">Logout</a>
-                </div>
-            </nav>
-        </div>
+                    <div class="sidebar-footer">
+                        <a href="">Parameters</a>
+                        <a href="{{ path('logout') }}">Logout</a>
+                    </div>
+                </nav>
+
+            </div>
+        {% else %}
+            <div class="content">
+                <a href="{{ path('login') }}">Lets log in</a>
+            </div>
+
+        {% endif %}
     {% endblock %}
