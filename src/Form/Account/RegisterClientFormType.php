@@ -24,6 +24,7 @@ class RegisterClientFormType extends AbstractType
             ->add('email', EmailType::class)
             ->add('numberPhone', PhoneNumberType::class, [
                 'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
+                'country_placeholder' => 'FR'
             ])
             ->add('birthday', DateType::class)
         ;
