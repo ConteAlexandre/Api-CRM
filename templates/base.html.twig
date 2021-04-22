@@ -10,16 +10,16 @@
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/brands.min.css">
         <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/solid.min.css">
     {% endblock %}
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"></script>
-        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-    {% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
+{% include 'sidebar.html.twig' %}
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
 </body>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"></script>
+{% endblock %}
 </html>

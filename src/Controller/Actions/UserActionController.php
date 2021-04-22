@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\User;
+namespace App\Controller\Actions;
 
 use App\Form\InvoiceFormType;
 use App\Manager\ClientManager;
@@ -39,14 +39,14 @@ class UserActionController extends AbstractController
     }
 
     /**
-     * @Route("/archived", name="archived", methods={"POST"})
+     * @Route("/archived", name="archived")
      *
      * @param               $slug
      * @param ClientManager $clientManager
      *
-     * @return JsonResponse
+     * @return Response
      */
-    public function archivedAction($slug, ClientManager $clientManager): JsonResponse
+    public function archivedAction($slug, ClientManager $clientManager): Response
     {
         $user = $this->getUser();
         $client = $clientManager->getClientBySlug($slug);
@@ -54,9 +54,10 @@ class UserActionController extends AbstractController
         if ($user) {
             $client->setIsArchived(true);
 
-            return new JsonResponse('The client is archived');
+            $this->addFlash('success', sprintf("The client %s has been archived", $client->getFirstName()));
+            return $this->redirectToRoute('clients');
         } else {
-            throw new AccessDeniedException('Not Authorized');
+            return $this->redirectToRoute('homepage');
         }
     }
 

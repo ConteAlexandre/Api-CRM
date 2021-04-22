@@ -58,3 +58,8 @@ security:
          - { path: ^/admin/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/admin/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/action, roles: ROLE_USER }
+         - { path: ^/user, roles: ROLE_USER }
+         - { path: ^/client, roles: ROLE_USER }
+         - { path: ^/prospect, roles: ROLE_USER }

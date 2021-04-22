@@ -48,7 +48,7 @@ class ClientManager
      */
     public function getClientByUser($user): array
     {
-        $clients = $this->clientRepository->findBy(['user' => $user]);
+        $clients = $this->clientRepository->findBy(['user' => $user, 'isProspect' => false]);
         return $clients;
     }
 
@@ -60,6 +60,17 @@ class ClientManager
     {
         $client = $this->clientRepository->findOneBySlug($slug);
         return $client;
+    }
+
+    /**
+     * @param $user
+     *
+     * @return Client[]
+     */
+    public function getClientISProspect($user): array
+    {
+        $prospects = $this->clientRepository->findBy(['user' => $user, 'isProspect' => true]);
+        return $prospects;
     }
 
     /**

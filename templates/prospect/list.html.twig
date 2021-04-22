@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Prospects{% endblock title %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Prospect</th>
+        </tr>
+        </thead>
+        {% for prospect in prospects %}
+            <tbody>
+            <tr>
+                <td><a href="{{ path('update_client', {'slug': prospect.slug }) }}">{{ prospect.firstName }}</a></td>
+                <td>{{ prospect.lastName }}</td>
+                <td>{{ prospect.email }}</td>
+                <td>{{ prospect.clientActivity }}</td>
+                <td>{{ prospect.isProspect }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+{% endblock body %}

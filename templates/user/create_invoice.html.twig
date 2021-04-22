@@ -3,7 +3,9 @@
 {% block title %}Create Invoice{% endblock title %}
 
 {% block body %}
-    <h4>Create invoice</h4>
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+    <h2 class="display-4 py-2">Envoi de Facture</h2>
+    <div class="px-2">
     {{ form_start(form) }}
     {{ form_label(form.filename) }}
     {{ form_errors(form.filename) }}
@@ -11,6 +13,7 @@
     {{ form_label(form.client) }}
     {{ form_errors(form.client) }}
     {{ form_widget(form.client) }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Envoyer la facture par Email" class="btn btn-primary" style="margin-top: 5px">
     {{ form_end(form) }}
+    </div>
 {% endblock %}
