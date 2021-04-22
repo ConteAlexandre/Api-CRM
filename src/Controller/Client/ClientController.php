@@ -3,6 +3,7 @@
 namespace App\Controller\Client;
 
 use App\Form\Account\RegisterClientFormType;
+use App\Manager\ActionManager;
 use App\Manager\ClientManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,12 +23,20 @@ class ClientController extends AbstractController
     protected $clientManager;
 
     /**
-     * ClientController constructor.
-     * @param ClientManager $clientManager
+     * @var ActionManager $actionManager
      */
-    public function __construct(ClientManager $clientManager)
+    protected $actionManager;
+
+    /**
+     * ClientController constructor.
+     *
+     * @param ClientManager $clientManager
+     * @param ActionManager $actionManager
+     */
+    public function __construct(ClientManager $clientManager, ActionManager $actionManager)
     {
         $this->clientManager = $clientManager;
+        $this->actionManager = $actionManager;
     }
 
     /**
@@ -73,11 +82,15 @@ class ClientController extends AbstractController
      */
     public function updateProfileClient(Request $request, $slug) : Response
     {
+        $action = $this->actionManager->create();
         $client = $this->clientManager->getClientBySlug($slug);
         $form = $this->createForm(RegisterClientFormType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $action->setTitle('Update Client')
+                ->setClient($client);
+            $this->actionManager->save($action);
             $this->clientManager->save($client);
 
             $this->addFlash('success', sprintf("The profile %s has been updated", $client->getFirstName()));
@@ -92,7 +105,8 @@ class ClientController extends AbstractController
 
     /**
      * @Route("/create", name="createClient")
-     * @param Request $request
+     *
+     * @param Request       $request
      *
      * @return Response
      * @throws \Exception
@@ -100,10 +114,14 @@ class ClientController extends AbstractController
     public function createClient(Request $request) : Response
     {
         $client = $this->clientManager->createClient();
+        $action = $this->actionManager->create();
         $form = $this->createForm(RegisterClientFormType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $action->setTitle('Create Client')
+                    ->setClient($client);
+            $this->actionManager->save($action);
             $this->clientManager->save($client);
 
             $this->addFlash('success', sprintf("The client has been created : %s", $client->getFirstName()));

@@ -3,6 +3,7 @@
 namespace App\Controller\Actions;
 
 use App\Form\InvoiceFormType;
+use App\Manager\ActionManager;
 use App\Manager\ClientManager;
 use App\Manager\InvoiceManager;
 use App\Service\InvoiceUploader;
@@ -43,16 +44,24 @@ class UserActionController extends AbstractController
      *
      * @param               $slug
      * @param ClientManager $clientManager
+     * @param ActionManager $actionManager
      *
      * @return Response
+     * @throws \Exception
      */
-    public function archivedAction($slug, ClientManager $clientManager): Response
+    public function archivedAction($slug, ClientManager $clientManager, ActionManager $actionManager): Response
     {
         $user = $this->getUser();
+        $action = $actionManager->create();
         $client = $clientManager->getClientBySlug($slug);
 
         if ($user) {
             $client->setIsArchived(true);
+            $action
+                ->setTitle('Client Archived')
+                ->setClient($client);
+            $actionManager->save($action);
+            $clientManager->save($client);
 
             $this->addFlash('success', sprintf("The client %s has been archived", $client->getFirstName()));
             return $this->redirectToRoute('clients');
@@ -64,16 +73,18 @@ class UserActionController extends AbstractController
     /**
      * @Route("/upload/invoice", name="upload_invoice")
      *
-     * @param InvoiceManager     $invoiceManager
-     * @param Request            $request
-     * @param InvoiceUploader    $invoiceUploader
+     * @param InvoiceManager  $invoiceManager
+     * @param Request         $request
+     * @param InvoiceUploader $invoiceUploader
+     * @param ActionManager   $actionManager
      *
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, InvoiceUploader $invoiceUploader): Response
+    public function uploadInvoiceAction(InvoiceManager $invoiceManager, Request $request, InvoiceUploader $invoiceUploader, ActionManager $actionManager): Response
     {
         $user = $this->getUser();
+        $action = $actionManager->create();
         $invoice = $invoiceManager->createInvoice();
         $form = $this->createForm(InvoiceFormType::class, $invoice);
         $form->handleRequest($request);
@@ -84,6 +95,11 @@ class UserActionController extends AbstractController
                 $invoiceFilename = $invoiceUploader->upload($invoiceFile);
                 $invoice->setFilename($invoiceFilename);
             }
+            $action
+                ->setTitle('Upload Invoice')
+                ->setClient($form->get('client')->getData())
+                ->setInvoice($invoice);
+            $actionManager->save($action);
             $invoiceManager->save($invoice);
 
             $this->sendMail($form->get('client')->getData(), $this->getParameter('invoice_directory').'/'.$invoice->getFilename());

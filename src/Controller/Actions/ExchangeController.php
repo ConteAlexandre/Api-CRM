@@ -38,8 +38,11 @@ class ExchangeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $action->setExchange($exchange);
-            $action->setClient($form->get('client')->getData());
+            dump($form->get('type')->getData());
+            $action
+                ->setTitle(sprintf("Create Appointment of type : %s", $form->get('type')->getData()[0]))
+                ->setExchange($exchange)
+                ->setClient($form->get('client')->getData());
             $exchangeManager->save($exchange);
             $actionManager->save($action);
 

@@ -43,6 +43,11 @@ class Action
     private $devis;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -126,6 +131,18 @@ class Action
     public function setDevis(?Devis $devis): self
     {
         $this->devis = $devis;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
