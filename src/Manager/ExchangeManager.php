@@ -24,6 +24,13 @@ class ExchangeManager
      */
     private $logger;
 
+    /**
+     * ExchangeManager constructor.
+     *
+     * @param ExchangeRepository     $exchangeRepository
+     * @param LoggerInterface        $logger
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(ExchangeRepository $exchangeRepository, LoggerInterface $logger, EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
@@ -41,6 +48,15 @@ class ExchangeManager
 
         return $exchange;
     }
+
+    /**
+     * @return Exchange[]
+     */
+    public function getAllExchange(): array
+    {
+        return $this->exchangeRepository->findAll();
+    }
+
     /**
      * @param Exchange $Exchange
      * @param bool    $andFlush

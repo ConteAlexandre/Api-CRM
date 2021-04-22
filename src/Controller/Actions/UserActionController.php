@@ -129,4 +129,20 @@ class UserActionController extends AbstractController
 
         $this->mailer->send($email);
     }
+
+    /**
+     * @Route("/list", name="list_action")
+     *
+     * @param ActionManager $actionManager
+     *
+     * @return Response
+     */
+    public function list(ActionManager $actionManager): Response
+    {
+        $actions = $actionManager->getAllAction();
+
+        return $this->render('action/list.html.twig', [
+            'actions' => $actions,
+        ]);
+    }
 }

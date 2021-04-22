@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}List Exchange{% endblock title %}
+
+{% block body %}
+    <table id="tableClients" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+        <tr>
+            <th scope="col">Client</th>
+            <th scope="col">Contenu</th>
+            <th scope="col">Type</th>
+            <th scope="col">Date de création</th>
+            <th scope="col">Créé par</th>
+        </tr>
+        </thead>
+        {% for exchange in exchanges %}
+            <tbody>
+            <tr>
+                <td>{{ exchange.client }}</td>
+                <td>{{ exchange.content }}</td>
+                <td>{{ exchange.type[0] }}</td>
+                <td>{{ exchange.createdAt.format("d m Y") }}</td>
+                <td>{{ exchange.createdBy }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+    <h4><a href="{{ path('createAppointment') }}">Créer Rendez-vous</a></h4>
+{% endblock body %}

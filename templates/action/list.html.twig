@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block title %}List Actions{% endblock title %}
+
+{% block body %}
+    <table id="tableClients" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col">Client</th>
+            <th scope="col">Type</th>
+            <th scope="col">Date de Création</th>
+            <th scope="col">Créée par</th>
+        </tr>
+        </thead>
+        {% for action in actions %}
+            <tbody>
+            <tr>
+                <td>{{ action.title }}</td>
+                <td>{{ action.client }}</td>
+                <td>
+                    {% if action.exchange is not null %}
+                    Rendez-vous
+                    {% elseif action.invoice is not null %}
+                    Facturation
+                    {% endif %}
+                </td>
+                <td>{{ action.createdAt.format("d m Y") }}</td>
+                <td>{{ action.createdBy }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+{% endblock body %}

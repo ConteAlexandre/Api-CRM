@@ -52,6 +52,14 @@ class ActionManager
     }
 
     /**
+     * @return Action[]
+     */
+    public function getAllAction(): array
+    {
+        return $this->actionRepository->findAll();
+    }
+
+    /**
      * @param Action $action
      * @param bool   $andFlush
      */

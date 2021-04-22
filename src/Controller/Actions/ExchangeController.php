@@ -10,7 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/**
+ * Class ExchangeController
+ *
+ * @Route("/appointment")
+ */
 class ExchangeController extends AbstractController
 {
     /**
@@ -24,7 +28,7 @@ class ExchangeController extends AbstractController
     }
 
     /**
-     * @Route("/create/appointment", name="createAppointment")
+     * @Route("/create", name="createAppointment")
      * @param ExchangeManager $exchangeManager
      * @param Request         $request
      * @param ActionManager   $actionManager
@@ -38,9 +42,8 @@ class ExchangeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form->get('type')->getData());
             $action
-                ->setTitle(sprintf("Create Appointment of type : %s", $form->get('type')->getData()[0]))
+                ->setTitle(sprintf("Création de rendez-vous de type : %s", $form->get('type')->getData()[0]))
                 ->setExchange($exchange)
                 ->setClient($form->get('client')->getData());
             $exchangeManager->save($exchange);
@@ -50,8 +53,24 @@ class ExchangeController extends AbstractController
             return $this->redirectToRoute('clients');
         }
 
-        return $this->render('user/create_exchange.html.twig',[
+        return $this->render('exchange/create.html.twig',[
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/list", name="listAppointment")
+     *
+     * @param ExchangeManager $exchangeManager
+     *
+     * @return Response
+     */
+    public function list(ExchangeManager $exchangeManager): Response
+    {
+        $exchanges = $exchangeManager->getAllExchange();
+
+        return $this->render('exchange/list.html.twig', [
+            'exchanges' => $exchanges,
         ]);
     }
 }
