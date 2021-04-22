@@ -3,12 +3,26 @@
 {% block title %}Profile{% endblock title %}
 
 {% block body %}
-    {{ user.username }}
-    {{ user.firstName }}
-    {{ user.lastName }}
-    {{ user.email }}
-    {{ user.phoneNumber|phone_number_format }}
-    <a href="{{ path('user_updateProfile') }}">Edit Profile</a>
-    <a href="{{ path('user_updateUserPassword') }}">Update Password</a>
-    <a href="{{ path('clients') }}">List Clients</a>
+    <div class="card-body" style="margin-top: 150px; margin-left: 15%">
+        <h2>Profil</h2>
+        <div style="display: flex">
+        <div class="col-lg-3">
+            <div>Prenom</div>
+            <div>Nom</div>
+            <div>Email</div>
+            <div>Numero de Téléphone</div>
+            <div><a href="{{ path('user_updateProfile') }}">Modifier mon Profil</a></div>
+            <div><a href="{{ path('user_updateUserPassword') }}">Modifier mon Mot de passe</a></div>
+            <div><a href="{{ path('clients') }}">Mes Clients</a></div>
+        </div>
+
+
+   <div> {{ user.firstName }}</div>
+            <div>{{ user.lastName }}</div>
+            <div> {{ user.email }}</div>
+            <div>{{ user.phoneNumber|phone_number_format }}</div>
+
+         </div>
+         </div>
+    </div>
 {% endblock body %}
