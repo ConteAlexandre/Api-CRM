@@ -3,6 +3,7 @@
 namespace App\Controller\Actions;
 
 use App\Form\Actions\AppointmentFormType;
+use App\Manager\ActionManager;
 use App\Manager\ExchangeManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,18 +26,25 @@ class ExchangeController extends AbstractController
     /**
      * @Route("/create/appointment", name="createAppointment")
      * @param ExchangeManager $exchangeManager
-     * @param Request $request
+     * @param Request         $request
+     * @param ActionManager   $actionManager
+     *
      * @return Response
      */
-    public function createAppointment(ExchangeManager $exchangeManager, Request $request) : Response {
+    public function createAppointment(ExchangeManager $exchangeManager, Request $request, ActionManager $actionManager) : Response {
+        $action = $actionManager->create();
         $exchange = $exchangeManager->createExchange();
         $form = $this->createForm(AppointmentFormType::class, $exchange);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $action->setExchange($exchange);
+            $action->setClient($form->get('client')->getData());
             $exchangeManager->save($exchange);
+            $actionManager->save($action);
 
-
+            $this->addFlash('success', 'The exchange has been created');
+            return $this->redirectToRoute('clients');
         }
 
         return $this->render('user/create_exchange.html.twig',[
