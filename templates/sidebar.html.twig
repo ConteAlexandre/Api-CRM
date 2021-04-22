@@ -39,40 +39,25 @@
                             </li>
                         {% endif %}
                         <li>
-                            <a href="#">
+                            <a href="{{ path('clients') }}">
                                 <span>Clients</span>
                             </a>
 
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ path('prospect_list') }}">
                                 <span>Prospects</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
-                                <span>Societies</span>
+                            <a href="{{ path('createAppointment') }}">
+                                <span>Rendez-Vous</span>
                             </a>
                         </li>
-                        <li class="header-menu">
-                            <span>Extra</span>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span>Documentation</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span>Calendar</span>
-                            </a>
-                        </li>
-
                     </ul>
                 </div>
             </div>
             <div class="sidebar-footer">
-                <a href="">Parameters</a>
                 <a href="{{ path('logout') }}">Logout</a>
             </div>
         </nav>
