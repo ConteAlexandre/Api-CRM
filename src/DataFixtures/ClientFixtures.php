@@ -44,6 +44,7 @@ class ClientFixtures extends AbstractFixtures implements DependentFixtureInterfa
                 'firstName'=> $this->faker->firstName,
                 'last_name' => $this->faker->lastName,
                 'email' => $this->faker->email,
+                'client_activity' => $this->getReference($this->faker->randomElement(array_keys(ClientActivityFixtures::CLIENT_ACTIVITY))),
                 'birthday'=> $this->faker->dateTime,
                 'numberPhone'=> $phoneNumber,
                 'isProspect'=> $this->faker->boolean(),
