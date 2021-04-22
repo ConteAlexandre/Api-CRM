@@ -62,3 +62,4 @@ security:
          - { path: ^/action, roles: ROLE_USER }
          - { path: ^/user, roles: ROLE_USER }
          - { path: ^/client, roles: ROLE_USER }
+         - { path: ^/prospect, roles: ROLE_USER }
