@@ -2,6 +2,13 @@ controllers:
     resource: ../../src/Controller/
     type: annotation
 
+actions:
+    resource: ../../src/Controller/Actions
+    prefix: /action
+    name_prefix: action_
+    type: annotation
+
+
 kernel:
     resource: ../../src/Kernel.php
     type: annotation

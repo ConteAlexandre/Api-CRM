@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller\Actions;
-
 
 use App\Form\Actions\AppointmentFormType;
 use App\Manager\ExchangeManager;
@@ -25,7 +23,7 @@ class ExchangeController extends AbstractController
     }
 
     /**
-     * @Route("/createAppointment", name="createAppointment")
+     * @Route("/create/appointment", name="createAppointment")
      * @param ExchangeManager $exchangeManager
      * @param Request $request
      * @return Response
