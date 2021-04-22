@@ -3,20 +3,24 @@
 {% block title %}Create Appointment{% endblock title %}
 
 {% block body %}
-    <h4>Create Appointment</h4>
-    {{ form_start(form) }}
-    {{ form_label(form.title) }}
-    {{ form_errors(form.title) }}
-    {{ form_widget(form.title) }}
-    {{ form_label(form.client) }}
-    {{ form_errors(form.client) }}
-    {{ form_widget(form.client) }}
-    {{ form_label(form.content) }}
-    {{ form_errors(form.content) }}
-    {{ form_widget(form.content) }}
-    {{ form_label(form.type) }}
-    {{ form_errors(form.type) }}
-    {{ form_widget(form.type) }}
-    <input type="submit" value="Submit">
-    {{ form_end(form) }}
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+        <h2 class="display-4 py-2">Définir un Rendez-vous</h2>
+     <div class="px-2">
+        {{ form_start(form) }}
+        {{ form_label(form.title, 'Titre') }}
+        {{ form_errors(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_label(form.client) }}
+        {{ form_errors(form.client) }}
+        {{ form_widget(form.client) }}
+        {{ form_label(form.content, 'Détail du Rendez-vous') }}
+        {{ form_errors(form.content) }}
+        {{ form_widget(form.content) }}
+        {{ form_label(form.type , 'Format du Rendez-vous') }}
+        {{ form_errors(form.type) }}
+        {{ form_widget(form.type) }}
+        <input type="submit" value="Créer un Rendez-vous" class="btn btn-primary" style="margin-top: 5px">
+        {{ form_end(form) }}
+     </div>
+    </div>
 {% endblock %}

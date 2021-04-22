@@ -46,7 +46,7 @@ class UserFixtures extends AbstractFixtures
             'phone_number' => $phoneNumber,
             'password' => $passwordMichel,
             'salt' => md5(random_bytes(32)),
-            'roles' => ['ROLE_USER'],
+            'roles' => ['ROLE_ADMIN'],
             'enabled' => true,
         ];
 
