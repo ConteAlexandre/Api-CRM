@@ -3,13 +3,26 @@
 {% block title %}List Clients{% endblock title %}
 
 {% block body %}
-    <table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">FirstName</th>
+            <th scope="col">LastName</th>
+            <th scope="col">Email</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Prospect</th>
+        </tr>
+        </thead>
         {% for client in clients %}
-            <td><a href="{{ path('update_client', {'slug': client.slug }) }}">{{ client.firstName }}</a></td>
-            <td>{{ client.lastName }}</td>
-            <td>{{ client.email }}</td>
-            <td>{{ client.clientActivity }}</td>
-            <td>{{ client.isProspect }}</td>
+            <tbody>
+            <tr>
+                <td><a href="{{ path('update_client', {'slug': client.slug }) }}">{{ client.firstName }}</a></td>
+                <td>{{ client.lastName }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.clientActivity }}</td>
+                <td>{{ client.isProspect }}</td>
+            </tr>
+            </tbody>
         {% endfor %}
     </table>
 {% endblock body %}
