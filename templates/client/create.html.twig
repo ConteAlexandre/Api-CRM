@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
-        <h1 class="display-4 py-2 text-truncate">Ajouter un client</h1>
+        <h2 class="display-4 py-2">Ajouter un client</h2>
     {{ form_start(form) }}
     {{ form_label(form.firstName ,'Prenom') }}
     {{ form_errors(form.firstName) }}
@@ -15,18 +15,18 @@
     {{ form_label(form.email) }}
     {{ form_errors(form.email) }}
     {{ form_widget(form.email) }}
-        <div class=" col-lg-7 mx-auto text-center">
+        <div class=" col-lg-8 mx-auto text-center">
     {{ form_label(form.birthday , 'Date de naissance') }}
     {{ form_errors(form.birthday) }}
     {{ form_widget(form.birthday) }}
     </div>
-        <div class="form-group" style="flex: auto">
-            <div class="col-xl-5 form p-4">
+        <div class="form-group" style="display: flex; margin-top: 10px">
+            <div style="width: 33%">
     {{ form_label(form.numberPhone.country, 'Pays') }}
     {{ form_errors(form.numberPhone.country) }}
     {{ form_widget(form.numberPhone.country) }}
             </div>
-            <div class="col-xl-5 form p-4">
+            <div>
         {{ form_label(form.numberPhone.number, 'Numéro de téléphone') }}
         {{ form_errors(form.numberPhone.number) }}
         {{ form_widget(form.numberPhone.number) }}
