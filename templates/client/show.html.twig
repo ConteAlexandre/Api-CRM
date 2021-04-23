@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile {{ client.firstName }}{% endblock title %}
+
+{% block body %}
+    <div class="card-body" style="margin-top: 150px; margin-left: 15%">
+        <h2>Profil</h2>
+        <div style="display: flex">
+            <div class="col-lg-3">
+                <div>Prenom</div>
+                <div>Nom</div>
+                <div>Email</div>
+                <div>Activité</div>
+                <div>Date de Naissance</div>
+                <div>Numero de Téléphone</div>
+            </div>
+            <div class="col-lg-3">
+                <div> {{ client.firstName }}</div>
+                <div> {{ client.lastName }}</div>
+                <div>{{ client.email }}</div>
+                <div style="width: 20%; height: 25px">{{ client.clientActivity }}</div>
+                <div>{{ client.birthday|date }}</div>
+                <div> {{ client.numberPhone|phone_number_format }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

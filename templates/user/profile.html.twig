@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Profile{% endblock title %}
+
+{% block body %}
+    <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+    <h2 class="display-4 py-2">Modification de mon profil</h2>
+    <div class="px-2">
+    {{ form_start(form) }}
+    {{ form_label(form.username) }}
+    {{ form_errors(form.username) }}
+    {{ form_widget(form.username) }}
+    {{ form_label(form.firstName) }}
+    {{ form_errors(form.firstName) }}
+    {{ form_widget(form.firstName) }}
+    {{ form_label(form.lastName) }}
+    {{ form_errors(form.lastName) }}
+    {{ form_widget(form.lastName) }}
+    {{ form_label(form.email) }}
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email) }}
+    <div class="form-group" style="display: flex; margin-top: 10px">
+    <div style="width: 33%">
+        {{ form_label(form.phoneNumber.country, 'Pays') }}
+        {{ form_errors(form.phoneNumber.country) }}
+        {{ form_widget(form.phoneNumber.country) }}
+    </div>
+        <div>
+            {{ form_label(form.phoneNumber.number, 'Numéro de téléphone') }}
+            {{ form_errors(form.phoneNumber.number) }}
+            {{ form_widget(form.phoneNumber.number) }}
+        </div>
+    </div>
+    </div>
+        <input type="submit" value="Modification" class="btn btn-primary" style="margin-top: 5px">
+    </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock body %}
