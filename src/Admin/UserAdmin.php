@@ -62,9 +62,6 @@ class UserAdmin extends AbstractAdmin
             ->add('plainPassword', PasswordType::class, [
                 'required' => false,
             ])
-            ->add('isArchived', CheckboxType::class, [
-                'required' => false,
-            ])
             ->add('enabled', CheckboxType::class, [
                 'required' => false,
             ])
@@ -86,7 +83,6 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName')
             ->add('email')
             ->add('roles')
-            ->add('isArchived')
             ->add('enabled')
             ->add('createdAt')
             ->add('updatedAt')
@@ -106,7 +102,6 @@ class UserAdmin extends AbstractAdmin
             ->add('lastName')
             ->add('email')
             ->add('roles')
-            ->add('isArchived')
             ->add('enabled')
             ->add('createdAt')
             ->add('updatedAt')

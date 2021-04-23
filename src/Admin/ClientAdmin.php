@@ -36,6 +36,9 @@ class ClientAdmin extends AbstractAdmin
                 'widget' => PhoneNumberType::WIDGET_COUNTRY_CHOICE,
             ])
             ->add('isProspect', CheckboxType::class)
+            ->add('isArchived', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('enabled', CheckboxType::class)
         ;
     }
@@ -54,6 +57,7 @@ class ClientAdmin extends AbstractAdmin
             ->add('lastName')
             ->add('email')
             ->add('clientActivity')
+            ->add('isArchived')
             ->add('enabled')
             ->add('createdAt')
             ->add('updatedAt')
@@ -75,6 +79,7 @@ class ClientAdmin extends AbstractAdmin
             ->add('birthday')
             ->add('phoneNumber')
             ->add('isProspect')
+            ->add('isArchived')
             ->add('enabled')
             ->add('createdAt')
             ->add('updatedAt')
