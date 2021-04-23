@@ -60,8 +60,8 @@ class UserActionController extends AbstractController
             $action
                 ->setTitle('Client Archived')
                 ->setClient($client);
-            $actionManager->save($action);
             $clientManager->save($client);
+            $actionManager->save($action);
 
             $this->addFlash('success', sprintf("The client %s has been archived", $client->getFirstName()));
             return $this->redirectToRoute('clients');
@@ -99,8 +99,8 @@ class UserActionController extends AbstractController
                 ->setTitle('Upload Invoice')
                 ->setClient($form->get('client')->getData())
                 ->setInvoice($invoice);
-            $actionManager->save($action);
             $invoiceManager->save($invoice);
+            $actionManager->save($action);
 
             $this->sendMail($form->get('client')->getData(), $this->getParameter('invoice_directory').'/'.$invoice->getFilename());
         }

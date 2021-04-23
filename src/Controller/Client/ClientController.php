@@ -90,8 +90,8 @@ class ClientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $action->setTitle('Update Client')
                 ->setClient($client);
-            $this->actionManager->save($action);
             $this->clientManager->save($client);
+            $this->actionManager->save($action);
 
             $this->addFlash('success', sprintf("The profile %s has been updated", $client->getFirstName()));
             return $this->redirectToRoute('clients');
@@ -121,8 +121,8 @@ class ClientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $action->setTitle('Create Client')
                     ->setClient($client);
-            $this->actionManager->save($action);
             $this->clientManager->save($client);
+            $this->actionManager->save($action);
 
             $this->addFlash('success', sprintf("The client has been created : %s", $client->getFirstName()));
             return $this->redirectToRoute('clients');
