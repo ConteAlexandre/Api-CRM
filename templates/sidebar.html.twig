@@ -20,7 +20,7 @@
             <strong>{{ app.user.lastname }}</strong>
           </span>
                         {% if is_granted('ROLE_ADMIN') %}
-                            <span class="user-role">Administrator</span>
+                            <span class="user-role">Administrateur</span>
                         {% else %}
                             <span class="user-role">Commercial</span>
                         {% endif %}
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="sidebar-footer">
-                <a href="{{ path('logout') }}">Logout</a>
+                <a href="{{ path('logout') }}">Déconnexion</a>
             </div>
         </nav>
     </div>
@@ -92,7 +92,7 @@
                         </li>
                         <li>
                             <a href="{{ path('login') }}">
-                                <span>Login</span>
+                                <span>Se connecter</span>
                             </a>
                         </li>
                     </ul>
