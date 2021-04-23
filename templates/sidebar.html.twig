@@ -31,13 +31,6 @@
                         <li class="header-menu">
                             <span>General</span>
                         </li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li>
-                                <a href="#">
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-                        {% endif %}
                         <li>
                             <a href="{{ path('clients') }}">
                                 <span>Clients</span>
